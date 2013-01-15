@@ -7,14 +7,14 @@ the [MPDF](http://mpdf1.com) library
 Example:
 
 ```
-  	$document = new \Famelo\PDF\Document('My.Package:SomeDocument');
-		$document->assign('someVariable', 'foobar');
+$document = new \Famelo\PDF\Document('My.Package:SomeDocument');
+$document->assign('someVariable', 'foobar');
 
-    // Trigger a Download and exit
-		$document->download('SomeDocument ' . date('d.m.Y') . '.pdf');
+// Trigger a Download and exit
+$document->download('SomeDocument ' . date('d.m.Y') . '.pdf');
 
-    // Show the document inline and exit
-  	$document->inline();
+// Show the document inline and exit
+$document->inline();
 ```
 
 This example will render a template located at 'resource://My.Package/Private/Documents/SomeDocument.html

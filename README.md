@@ -6,7 +6,7 @@ the [MPDF](http://mpdf1.com) library
 
 Example:
 
-```
+```php
 $document = new \Famelo\PDF\Document('My.Package:SomeDocument');
 $document->assign('someVariable', 'foobar');
 

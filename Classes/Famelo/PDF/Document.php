@@ -92,6 +92,8 @@ class Document {
 
 		$this->view->setFormat('html');
 
+		$this->view->getRequest()->setControllerPackageKey($this->package);
+
 		return $this->view->render();
 	}
 

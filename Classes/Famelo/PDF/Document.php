@@ -103,7 +103,7 @@ class Document {
 		$previousErrorReporting = error_reporting(0);
 		$pdf = new \mPDF();
 		$pdf->WriteHTML($content);
-		$output = $pdf->Output('', 'i');
+		$output = $pdf->Output($filename, 'i');
 		error_reporting($previousErrorReporting);
 	}
 

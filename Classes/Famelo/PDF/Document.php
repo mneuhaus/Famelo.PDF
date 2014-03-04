@@ -118,12 +118,12 @@ class Document {
 	}
 
 	public function save($filename) {
+        $content = $this->render();
 		$previousErrorReporting = error_reporting(0);
 		$pdf = new \mPDF();
 		$pdf->WriteHTML($content);
 		$pdf->Output($filename, 'f');
 		error_reporting($previousErrorReporting);
-		exit;
 	}
 
 	public function assign($key, $value) {

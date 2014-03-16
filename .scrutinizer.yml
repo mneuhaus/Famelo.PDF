@@ -4,9 +4,6 @@ filter:
 
 tools:
 
-    external_code_coverage:
-        timeout: 700
-
     php_cpd:
         enabled: true
 

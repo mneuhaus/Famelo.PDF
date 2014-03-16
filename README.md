@@ -1,6 +1,8 @@
 Famelo.PDF
 ==========
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mneuhaus/Famelo.PDF/badges/quality-score.png?s=b6c22938502bc98132697e2b98b33429b3a05144)](https://scrutinizer-ci.com/g/mneuhaus/Famelo.PDF/)
+
 This package provides a quick and simple way to generate a PDF from a Fluid Template through
 the [MPDF](http://mpdf1.com) library
 

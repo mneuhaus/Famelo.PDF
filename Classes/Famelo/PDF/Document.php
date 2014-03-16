@@ -116,7 +116,7 @@ class Document {
 	}
 
 	public function save($filename) {
-        $content = $this->render();
+		$content = $this->render();
 		$previousErrorReporting = error_reporting(0);
 		$pdf = new \mPDF();
 		$pdf->WriteHTML($content);

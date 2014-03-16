@@ -1,1 +1,14 @@
-{"name":"famelo\/pdf","type":"typo3-flow-package","description":"","require":{"typo3\/flow":"*"},"autoload":{"psr-0":{"Famelo\\PDF":"Classes"}}}
+{
+  "name":"famelo\/pdf",
+  "type":"typo3-flow-package",
+  "description":"",
+  "require": {
+    "typo3\/flow": "*"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-0": {
+      "Famelo\\PDF":"Classes"
+    }
+  }
+}

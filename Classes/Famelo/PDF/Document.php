@@ -13,8 +13,6 @@ namespace Famelo\PDF;
 
 use TYPO3\Flow\Annotations as Flow;
 
-require_once(FLOW_PATH_PACKAGES . 'Application/Famelo.PDF/Resources/Private/PHP/mpdf/mpdf.php');
-
 /**
  * Document class for the SwiftMailer package
  *
@@ -103,7 +101,7 @@ class Document {
 		$previousErrorReporting = error_reporting(0);
 		$pdf = new \mPDF();
 		$pdf->WriteHTML($content);
-		$output = $pdf->Output($filename, 'i');
+		$pdf->Output($filename, 'i');
 		error_reporting($previousErrorReporting);
 	}
 
@@ -113,7 +111,7 @@ class Document {
 		$previousErrorReporting = error_reporting(0);
 		$pdf = new \mPDF();
 		$pdf->WriteHTML($content);
-		$output = $pdf->Output($filename, 'd');
+		$pdf->Output($filename, 'd');
 		error_reporting($previousErrorReporting);
 	}
 

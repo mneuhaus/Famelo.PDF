@@ -52,8 +52,14 @@ class Document {
 	 */
 	protected $view;
 
-	public function __construct($document) {
+	/**
+	 * @var mixed
+	 */
+	protected $format;
+
+	public function __construct($document, $format = 'A4') {
 		$this->setDocument($document);
+		$this->format = $format;
 	}
 
 	public function setDocument($document) {
@@ -65,6 +71,10 @@ class Document {
 			$this->document = $document;
 		}
 		return $this;
+	}
+
+	public function setFormat($format) {
+		$this->format = 'A4';
 	}
 
 	public function render() {
@@ -99,7 +109,7 @@ class Document {
 		$content = $this->render();
 
 		$previousErrorReporting = error_reporting(0);
-		$pdf = new \mPDF();
+		$pdf = new \mPDF('', $this->format);
 		$pdf->WriteHTML($content);
 		$pdf->Output($filename, 'i');
 		error_reporting($previousErrorReporting);
@@ -109,7 +119,7 @@ class Document {
 		$content = $this->render();
 
 		$previousErrorReporting = error_reporting(0);
-		$pdf = new \mPDF();
+		$pdf = new \mPDF('', $this->format);
 		$pdf->WriteHTML($content);
 		$pdf->Output($filename, 'd');
 		error_reporting($previousErrorReporting);
@@ -118,7 +128,7 @@ class Document {
 	public function save($filename) {
 		$content = $this->render();
 		$previousErrorReporting = error_reporting(0);
-		$pdf = new \mPDF();
+		$pdf = new \mPDF('', $this->format);
 		$pdf->WriteHTML($content);
 		$pdf->Output($filename, 'f');
 		error_reporting($previousErrorReporting);

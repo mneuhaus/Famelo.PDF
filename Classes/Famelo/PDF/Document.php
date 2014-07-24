@@ -2,7 +2,7 @@
 namespace Famelo\PDF;
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "SwiftMailer".                *
+ * This script belongs to the FLOW3 package "Famelo.PDF".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -11,11 +11,10 @@ namespace Famelo\PDF;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use Famelo\PDF\Generator\PdfGeneratorInterface;
 use TYPO3\Flow\Annotations as Flow;
 
 /**
- * Document class for the SwiftMailer package
- *
  * @Flow\Scope("prototype")
  */
 class Document {
@@ -53,9 +52,28 @@ class Document {
 	protected $view;
 
 	/**
-	 * @var mixed
+	 * @var string
 	 */
 	protected $format;
+
+	/**
+	 *
+	 * @Flow\Inject(setting="DefaultGenerator")
+	 * @var string
+	 */
+	protected $defaultGenerator;
+
+	/**
+	 *
+	 * @Flow\Inject(setting="DefaultGeneratorOptions")
+	 * @var array
+	 */
+	protected $defaultGeneratorOptions;
+
+	/**
+	 * @var PdfGeneratorInterface
+	 */
+	protected $generator;
 
 	public function __construct($document, $format = 'A4') {
 		$this->setDocument($document);
@@ -74,7 +92,14 @@ class Document {
 	}
 
 	public function setFormat($format) {
-		$this->format = 'A4';
+		$this->format = $format;
+	}
+
+	public function getGenerator() {
+		if (!$this->generator instanceof PdfGeneratorInterface) {
+			$this->generator = new $this->defaultGenerator($this->defaultGeneratorOptions);
+		}
+		return $this->generator;
 	}
 
 	public function render() {
@@ -107,31 +132,23 @@ class Document {
 
 	public function send($filename = NULL) {
 		$content = $this->render();
-
-		$previousErrorReporting = error_reporting(0);
-		$pdf = new \mPDF('', $this->format);
-		$pdf->WriteHTML($content);
-		$pdf->Output($filename, 'i');
-		error_reporting($previousErrorReporting);
+		$generator = $this->getGenerator();
+		$generator->setFormat($this->format);
+		$generator->sendPdf($content, $filename);
 	}
 
 	public function download($filename = NULL) {
 		$content = $this->render();
-
-		$previousErrorReporting = error_reporting(0);
-		$pdf = new \mPDF('', $this->format);
-		$pdf->WriteHTML($content);
-		$pdf->Output($filename, 'd');
-		error_reporting($previousErrorReporting);
+		$generator = $this->getGenerator();
+		$generator->setFormat($this->format);
+		$generator->downloadPdf($content, $filename);
 	}
 
 	public function save($filename) {
 		$content = $this->render();
-		$previousErrorReporting = error_reporting(0);
-		$pdf = new \mPDF('', $this->format);
-		$pdf->WriteHTML($content);
-		$pdf->Output($filename, 'f');
-		error_reporting($previousErrorReporting);
+		$generator = $this->getGenerator();
+		$generator->setFormat($this->format);
+		$generator->savePdf($content, $filename);
 	}
 
 	public function assign($key, $value) {

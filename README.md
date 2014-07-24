@@ -65,3 +65,23 @@ All of the above values can be suffixed with "-L" to force a Landscape page orie
 If format is defined as a string, the final orientation parameter will be ignored.
 
 *Ledger and Tabloid are standard formats with the same page size but different orientation (Ledger is landscape, and Tabloid is portrait). mPDF treats these identically; if you wish to use Ledger, you should specify "Ledger-L" for landscape.
+
+
+PDF Generator Implementation
+----------------------------
+
+By default this Library uses the MPDF library to generate the PDFs.
+But you can change the defaultGenerator through the Settings.yaml like
+this:
+
+```yaml
+Famelo:
+  PDF:
+    # Generator using wkhtmltopdf through knplabs/knp-snappy
+    DefaultGenerator: '\Famelo\PDF\Generator\WebkitGenerator'
+    DefaultGeneratorOptions:
+      Binary: '/usr/local/bin/wkhtmltopdf'
+```
+
+Feel free to create and use a generator for your favorite PDF Library
+And send me a Pull-Request if you think others might like to use it :)

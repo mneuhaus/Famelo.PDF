@@ -25,6 +25,16 @@ class WebkitGenerator implements PdfGeneratorInterface {
 	protected $format;
 
 	/**
+	 * @var string
+	 */
+	protected $options = array(
+		'margin-bottom' => 20,
+		'margin-top' => 0,
+		'margin-left' => 0,
+		'margin-right' => 0
+	);
+
+	/**
 	 * @var object
 	 */
 	protected $snappyPdf;
@@ -46,13 +56,21 @@ class WebkitGenerator implements PdfGeneratorInterface {
 			$this->snappyPdf->setOption('orientation', 'Landscape');
 			$format = substr($format, 0, -2);
 		}
-		$this->snappyPdf->setOption('page-size', $format);
+		$this->options['page-size'] = $format;
+	}
+
+	public function setHeader($content) {
+		$this->options['header-html'] = $content;
+	}
+
+	public function setFooter($content) {
+		$this->options['footer-html'] = $content;
 	}
 
 	public function sendPdf($content, $filename = NULL) {
 		header('Content-Type: application/pdf');
 		header('Content-Disposition: inline; filename="' . $filename . '"');
-		echo $this->snappyPdf->getOutputFromHtml($content);
+		echo $this->snappyPdf->getOutputFromHtml($content, $this->options);
 		exit();
 	}
 

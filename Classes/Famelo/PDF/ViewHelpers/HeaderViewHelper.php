@@ -1,8 +1,8 @@
 <?php
-namespace Famelo\PDF\Generator;
+namespace Famelo\PDF\ViewHelpers;
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.PDF".                 *
+ * This script belongs to the TYPO3 Flow package "Famelo.Pdf".            *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -11,21 +11,20 @@ namespace Famelo\PDF\Generator;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-interface PdfGeneratorInterface {
-
-	public function setFormat($format);
-
-	public function setHeader($content);
-
-	public function setFooter($content);
-
-	public function sendPdf($content, $filename = NULL);
-
-	public function downloadPdf($content, $filename = NULL);
-
-	public function savePdf($content, $filename);
-
+/**
+ * @api
+ */
+class HeaderViewHelper extends AbstractViewHelper {
+	/**
+	 * This tag will not be rendered at all.
+	 *
+	 * @return void
+	 * @api
+	 */
+	public function render() {
+		$header = $this->renderChildren();
+		$this->viewHelperVariableContainer->add('Famelo\Pdf\ViewHelpers\HeaderViewHelper', 'header', $header);
+	}
 }
-?>

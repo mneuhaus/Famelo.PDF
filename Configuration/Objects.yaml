@@ -1,0 +1,4 @@
+Famelo\PDF\View\StandaloneView:
+  properties:
+    renderingContext:
+      object: TYPO3\Fluid\Core\Rendering\RenderingContext

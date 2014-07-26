@@ -8,3 +8,9 @@ Famelo:
     #DefaultGenerator: '\Famelo\PDF\Generator\WebkitGenerator'
     #DefaultGeneratorOptions:
     #  Binary: '/usr/local/bin/wkhtmltopdf'
+
+TYPO3:
+  Flow:
+    object:
+      excludeClasses:
+        'knplabs.*': ['.*']

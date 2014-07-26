@@ -46,7 +46,7 @@ class Document {
 	/**
 	 * The view
 	 *
-	 * @var \TYPO3\Fluid\View\StandaloneView
+	 * @var \Famelo\PDF\View\StandaloneView
 	 * @Flow\Inject
 	 */
 	protected $view;
@@ -127,12 +127,27 @@ class Document {
 
 		$this->view->getRequest()->setControllerPackageKey($this->package);
 
-		return $this->view->render();
+		$content = $this->view->render();
+		return $content;
+	}
+
+	public function setOptionsByViewHelper($generator) {
+		$viewHelperVariableContainer = $this->view->getViewHelperVariableContainer();
+		if ($viewHelperVariableContainer->exists('Famelo\Pdf\ViewHelpers\HeaderViewHelper', 'header')) {
+			$header = $viewHelperVariableContainer->get('Famelo\Pdf\ViewHelpers\HeaderViewHelper', 'header');
+			$generator->setHeader($header);
+		}
+		$viewHelperVariableContainer = $this->view->getViewHelperVariableContainer();
+		if ($viewHelperVariableContainer->exists('Famelo\Pdf\ViewHelpers\FooterViewHelper', 'footer')) {
+			$footer = $viewHelperVariableContainer->get('Famelo\Pdf\ViewHelpers\FooterViewHelper', 'footer');
+			$generator->setFooter($footer);
+		}
 	}
 
 	public function send($filename = NULL) {
 		$content = $this->render();
 		$generator = $this->getGenerator();
+		$this->setOptionsByViewHelper($generator);
 		$generator->setFormat($this->format);
 		$generator->sendPdf($content, $filename);
 	}

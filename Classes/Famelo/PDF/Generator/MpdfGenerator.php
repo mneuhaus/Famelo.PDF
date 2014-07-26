@@ -27,6 +27,14 @@ class MpdfGenerator implements PdfGeneratorInterface {
 		$this->format = $format;
 	}
 
+	public function setHeader($content) {
+
+	}
+
+	public function setFooter($content) {
+
+	}
+
 	public function sendPdf($content, $filename = NULL) {
 		$previousErrorReporting = error_reporting(0);
 		$pdf = new \mPDF('', $this->format);

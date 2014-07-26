@@ -1,8 +1,8 @@
 <?php
-namespace Famelo\PDF\Generator;
+namespace Famelo\PDF\View;
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.PDF".                 *
+ * This script belongs to the FLOW3 package "Famelo.Messaging".           *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -13,19 +13,21 @@ namespace Famelo\PDF\Generator;
 
 use TYPO3\Flow\Annotations as Flow;
 
-interface PdfGeneratorInterface {
+/**
+ * A standalone template view.
+ * Helpful if you want to use Fluid separately from MVC
+ * E.g. to generate template based emails.
+ *
+ * @api
+ */
+class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
+	public function initializeObject() {
+		parent::initializeObject();
 
-	public function setFormat($format);
+		$this->request->setFormat('html');
+	}
 
-	public function setHeader($content);
-
-	public function setFooter($content);
-
-	public function sendPdf($content, $filename = NULL);
-
-	public function downloadPdf($content, $filename = NULL);
-
-	public function savePdf($content, $filename);
-
+	public function getViewHelperVariableContainer() {
+		return $this->baseRenderingContext->getViewHelperVariableContainer();
+	}
 }
-?>

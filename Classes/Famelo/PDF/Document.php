@@ -80,6 +80,11 @@ class Document {
 	 */
 	protected $generator;
 
+	/**
+	 * @var string
+	 */
+	protected $templateSource;
+
 	public function __construct($document, $format = 'A4') {
 		$this->setDocument($document);
 		$this->format = $format;
@@ -94,6 +99,10 @@ class Document {
 			$this->document = $document;
 		}
 		return $this;
+	}
+
+	public function setTemplateSource($templateSource) {
+		$this->templateSource = $templateSource;
 	}
 
 	public function setFormat($format) {
@@ -122,14 +131,18 @@ class Document {
 			'@package' => $this->package,
 			'@document' => $this->document
 		);
-		$template = str_replace(array_keys($replacements), array_values($replacements), $this->templatePath);
-		$this->view->setTemplatePathAndFilename($template);
+		if ($this->templateSource === NULL) {
+			$template = str_replace(array_keys($replacements), array_values($replacements), $this->templatePath);
+			$this->view->setTemplatePathAndFilename($template);
 
-		$layoutRootPath = str_replace(array_keys($replacements), array_values($replacements), $this->layoutRootPath);
-		$this->view->setLayoutRootPath($layoutRootPath);
+			$layoutRootPath = str_replace(array_keys($replacements), array_values($replacements), $this->layoutRootPath);
+			$this->view->setLayoutRootPath($layoutRootPath);
 
-		$partialRootPath = str_replace(array_keys($replacements), array_values($replacements), $this->partialRootPath);
-		$this->view->setPartialRootPath($partialRootPath);
+			$partialRootPath = str_replace(array_keys($replacements), array_values($replacements), $this->partialRootPath);
+			$this->view->setPartialRootPath($partialRootPath);
+		} else {
+			$this->view->setTemplateSource($this->templateSource);
+		}
 
 		$this->view->setFormat('html');
 

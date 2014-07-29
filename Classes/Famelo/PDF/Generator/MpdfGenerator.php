@@ -35,6 +35,10 @@ class MpdfGenerator implements PdfGeneratorInterface {
 
 	}
 
+	public function setOption($name, $value) {
+
+	}
+
 	public function sendPdf($content, $filename = NULL) {
 		$previousErrorReporting = error_reporting(0);
 		$pdf = new \mPDF('', $this->format);

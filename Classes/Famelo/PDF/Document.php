@@ -57,6 +57,11 @@ class Document {
 	protected $format;
 
 	/**
+	 * @var array
+	 */
+	protected $options = array();
+
+	/**
 	 *
 	 * @Flow\Inject(setting="DefaultGenerator")
 	 * @var string
@@ -98,6 +103,9 @@ class Document {
 	public function getGenerator() {
 		if (!$this->generator instanceof PdfGeneratorInterface) {
 			$this->generator = new $this->defaultGenerator($this->defaultGeneratorOptions);
+		}
+		foreach ($this->options as $name => $value) {
+			$this->generator->setOption($name, $value);
 		}
 		return $this->generator;
 	}
@@ -142,6 +150,10 @@ class Document {
 			$footer = $viewHelperVariableContainer->get('Famelo\Pdf\ViewHelpers\FooterViewHelper', 'footer');
 			$generator->setFooter($footer);
 		}
+	}
+
+	public function setOption($name, $value) {
+		$this->options[$name] = $value;
 	}
 
 	public function send($filename = NULL) {

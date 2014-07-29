@@ -21,6 +21,8 @@ interface PdfGeneratorInterface {
 
 	public function setFooter($content);
 
+	public function setOption($name, $value);
+
 	public function sendPdf($content, $filename = NULL);
 
 	public function downloadPdf($content, $filename = NULL);

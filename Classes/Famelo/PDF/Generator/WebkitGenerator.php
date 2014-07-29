@@ -28,7 +28,7 @@ class WebkitGenerator implements PdfGeneratorInterface {
 	 * @var string
 	 */
 	protected $options = array(
-		'margin-bottom' => 20,
+		'margin-bottom' => 0,
 		'margin-top' => 0,
 		'margin-left' => 0,
 		'margin-right' => 0
@@ -67,6 +67,10 @@ class WebkitGenerator implements PdfGeneratorInterface {
 		$this->options['footer-html'] = $content;
 	}
 
+	public function setOption($name, $value) {
+		$this->options[$name] = $value;
+	}
+
 	public function sendPdf($content, $filename = NULL) {
 		header('Content-Type: application/pdf');
 		header('Content-Disposition: inline; filename="' . $filename . '"');
@@ -77,12 +81,12 @@ class WebkitGenerator implements PdfGeneratorInterface {
 	public function downloadPdf($content, $filename = NULL) {
 		header('Content-Type: application/pdf');
 		header('Content-Disposition: attachment; filename="' . $filename . '"');
-		echo $this->snappyPdf->getOutputFromHtml($content);
+		echo $this->snappyPdf->getOutputFromHtml($content, $this->options);
 		exit();
 	}
 
 	public function savePdf($content, $filename) {
-		$this->snappyPdf->generateFromHtml($content, $filename);
+		$this->snappyPdf->generateFromHtml($content, $filename, $this->options);
 	}
 }
 ?>

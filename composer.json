@@ -6,7 +6,8 @@
     "typo3\/flow": "*"
   },
   "suggest": {
-    "knplabs/knp-snappy":  "wkhtmltopdf wrapper to use the WebkitGenerator"
+    "knplabs/knp-snappy":  "wkhtmltopdf wrapper to use the WebkitGenerator",
+    "itbz/fpdi": "fpdi library to use the FpdiGenerator"
   },
   "minimum-stability": "dev",
   "autoload": {

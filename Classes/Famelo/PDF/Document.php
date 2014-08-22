@@ -63,14 +63,14 @@ class Document {
 
 	/**
 	 *
-	 * @Flow\Inject(setting="DefaultGenerator")
+	 * @Flow\Inject(setting="DefaultGenerator", package="Famelo.PDF")
 	 * @var string
 	 */
 	protected $defaultGenerator;
 
 	/**
 	 *
-	 * @Flow\Inject(setting="DefaultGeneratorOptions")
+	 * @Flow\Inject(setting="DefaultGeneratorOptions", package="Famelo.PDF")
 	 * @var array
 	 */
 	protected $defaultGeneratorOptions;
@@ -111,7 +111,7 @@ class Document {
 
 	public function getGenerator() {
 		if (!$this->generator instanceof PdfGeneratorInterface) {
-			$this->generator = new $this->defaultGenerator($this->defaultGeneratorOptions);
+			$this->generator = new $this->defaultGenerator($this->defaultGeneratorOptions, $this->view);
 		}
 		foreach ($this->options as $name => $value) {
 			$this->generator->setOption($name, $value);

@@ -14,3 +14,4 @@ TYPO3:
     object:
       excludeClasses:
         'knplabs.*': ['.*']
+        'itbz.*': ['.*']

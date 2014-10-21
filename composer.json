@@ -1,7 +1,7 @@
 {
   "name":"famelo\/pdf",
   "type":"typo3-flow-package",
-  "description":"",
+  "description":"Provides a quick and simple way to generate a PDF from a Fluid Template through the MPDF library",
   "require": {
     "typo3\/flow": "*"
   },

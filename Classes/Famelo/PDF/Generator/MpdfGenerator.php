@@ -12,6 +12,7 @@ namespace Famelo\PDF\Generator;
  *                                                                        */
 
 use TYPO3\Flow\Annotations as Flow;
+require_once(FLOW_PATH_PACKAGES . 'Application/Famelo.PDF/Resources/Private/PHP/mpdf/mpdf.php');
 
 /**
  * @Flow\Scope("prototype")

@@ -26,6 +26,5 @@ class Package extends BasePackage {
 	 * @return void
 	 */
 	public function boot(Bootstrap $bootstrap) {
-		require_once(FLOW_PATH_PACKAGES . 'Application/Famelo.PDF/Resources/Private/PHP/mpdf/mpdf.php');
 	}
 }

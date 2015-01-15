@@ -24,25 +24,78 @@ class MpdfGenerator implements PdfGeneratorInterface {
 	 */
 	protected $format;
 
+	/**
+	 * @var string
+	 */
+	protected $header;
+
+	/**
+	 * @var string
+	 */
+	protected $footer;
+
+	/**
+	 * @var string
+	 */
+	protected $options = array(
+		'encoding' => '',
+		'format' => 'A4',
+		'orientation' => 'P',
+		'fontSize' => 0,
+		'font' => '',
+		'marginLeft' => 15,
+		'marginRight' => 15,
+		'marginTop' => 16,
+		'marginBottom' => 16,
+		'marginHeader' => 9,
+		'marginFooter' => 9
+	);
+
 	public function setFormat($format) {
-		$this->format = $format;
+		$this->setOption('format', $format);
 	}
 
 	public function setHeader($content) {
-
+		$this->header = $content;
 	}
 
 	public function setFooter($content) {
-
+		$this->footer = $content;
 	}
 
 	public function setOption($name, $value) {
+		if (!isset($this->options[$name])) {
+			throw new \Famelo\PDF\Error\UnknownGeneratorOptionException('The option "' . $name . '" you\'re trying to set does not exist. This generator supports these options: ' . chr(10) . chr(10) . implode(chr(10), array_keys($this->options)), 1421314368);
+		}
+		$this->options[$name] = $value;
+	}
 
+	public function getMpdfInstance() {
+		$mpdf = new \mPDF(
+			$this->options['encoding'],
+			$this->options['format'],
+			$this->options['fontSize'],
+			$this->options['font'],
+			$this->options['marginLeft'],
+			$this->options['marginRight'],
+			$this->options['marginTop'],
+			$this->options['marginBottom'],
+			$this->options['marginHeader'],
+			$this->options['marginFooter'],
+			$this->options['orientation']
+		);
+		if ($this->footer !== NULL) {
+			$mpdf->Footer($this->footer);
+		}
+		if ($this->header !== NULL) {
+			$mpdf->Header($this->header);
+		}
+		return $mpdf;
 	}
 
 	public function sendPdf($content, $filename = NULL) {
 		$previousErrorReporting = error_reporting(0);
-		$pdf = new \mPDF('', $this->format);
+		$pdf = $this->getMpdfInstance();
 		$pdf->WriteHTML($content);
 		$pdf->Output($filename, 'i');
 		error_reporting($previousErrorReporting);
@@ -50,7 +103,7 @@ class MpdfGenerator implements PdfGeneratorInterface {
 
 	public function downloadPdf($content, $filename = NULL) {
 		$previousErrorReporting = error_reporting(0);
-		$pdf = new \mPDF('', $this->format);
+		$pdf = $this->getMpdfInstance();
 		$pdf->WriteHTML($content);
 		$pdf->Output($filename, 'd');
 		error_reporting($previousErrorReporting);
@@ -58,7 +111,7 @@ class MpdfGenerator implements PdfGeneratorInterface {
 
 	public function savePdf($content, $filename) {
 		$previousErrorReporting = error_reporting(0);
-		$pdf = new \mPDF('', $this->format);
+		$pdf = $this->getMpdfInstance();
 		$pdf->WriteHTML($content);
 		$pdf->Output($filename, 'f');
 		error_reporting($previousErrorReporting);

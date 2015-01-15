@@ -84,11 +84,12 @@ class MpdfGenerator implements PdfGeneratorInterface {
 			$this->options['marginFooter'],
 			$this->options['orientation']
 		);
+
 		if ($this->footer !== NULL) {
-			$mpdf->Footer($this->footer);
+			$mpdf->SetHTMLFooter($this->footer);
 		}
 		if ($this->header !== NULL) {
-			$mpdf->Header($this->header);
+			$mpdf->SetHTMLHeader($this->header);
 		}
 		return $mpdf;
 	}

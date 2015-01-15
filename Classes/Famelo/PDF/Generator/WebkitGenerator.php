@@ -41,11 +41,11 @@ class WebkitGenerator implements PdfGeneratorInterface {
 
 	public function __construct($options) {
 		if (!class_exists('\Knp\Snappy\Pdf')) {
-			throw Exception('You need to install "knplabs/knp-snappy" to use the WebkitGenerator!');
+			throw new Exception('You need to install "knplabs/knp-snappy" to use the WebkitGenerator!');
 		}
 
 		if (!isset($options['Binary'])) {
-			throw Exception('You need to configure you\'r wkhtmltopdf binary in "Famelo.Pdf.DefaultGeneratorOptions.Binary".');
+			throw new Exception('You need to configure you\'r wkhtmltopdf binary in "Famelo.Pdf.DefaultGeneratorOptions.Binary".');
 		}
 
 		$this->snappyPdf = new \Knp\Snappy\Pdf($options['Binary']);

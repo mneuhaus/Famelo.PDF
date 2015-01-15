@@ -180,6 +180,7 @@ class Document {
 	public function download($filename = NULL) {
 		$content = $this->render();
 		$generator = $this->getGenerator();
+		$this->setOptionsByViewHelper($generator);
 		$generator->setFormat($this->format);
 		$generator->downloadPdf($content, $filename);
 	}
@@ -187,6 +188,7 @@ class Document {
 	public function save($filename) {
 		$content = $this->render();
 		$generator = $this->getGenerator();
+		$this->setOptionsByViewHelper($generator);
 		$generator->setFormat($this->format);
 		$generator->savePdf($content, $filename);
 	}

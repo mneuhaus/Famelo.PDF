@@ -17,6 +17,13 @@ use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @api
  */
 class HeaderViewHelper extends AbstractViewHelper {
+	
+	/**
+	 * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
+	 * @see AbstractViewHelper::isOutputEscapingEnabled()
+	 * @var boolean
+	 */
+	protected $escapeOutput = FALSE;
 	/**
 	 * This tag will not be rendered at all.
 	 *

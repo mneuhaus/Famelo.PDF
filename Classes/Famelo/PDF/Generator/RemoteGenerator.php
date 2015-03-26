@@ -74,15 +74,13 @@ class RemoteGenerator implements PdfGeneratorInterface {
 	public function sendPdf($content, $filename = NULL) {
 		header('Content-Type: application/pdf');
 		header('Content-Disposition: inline; filename="' . $filename . '"');
-		echo  $this->generate($content);
-		exit();
+		echo $this->generate($content);
 	}
 
 	public function downloadPdf($content, $filename = NULL) {
 		header('Content-Type: application/pdf');
 		header('Content-Disposition: attachment; filename="' . $filename . '"');
 		echo $this->generate($content);
-		exit();
 	}
 
 	public function savePdf($content, $filename) {

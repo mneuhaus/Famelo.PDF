@@ -41,14 +41,14 @@ class MpdfGenerator implements PdfGeneratorInterface {
 		'encoding' => '',
 		'format' => 'A4',
 		'orientation' => 'P',
-		'fontSize' => 0,
+		'font-size' => 0,
 		'font' => '',
-		'marginLeft' => 15,
-		'marginRight' => 15,
-		'marginTop' => 16,
-		'marginBottom' => 16,
-		'marginHeader' => 9,
-		'marginFooter' => 9
+		'margin-left' => 15,
+		'margin-right' => 15,
+		'margin-top' => 16,
+		'margin-bottom' => 16,
+		'margin-header' => 9,
+		'margin-footer' => 9,
 	);
 
 	public function setFormat($format) {
@@ -64,6 +64,18 @@ class MpdfGenerator implements PdfGeneratorInterface {
 	}
 
 	public function setOption($name, $value) {
+		$backwardsCompatabilityOptionNames = array(
+			'marginLeft' => 'margin-left',
+			'marginRight' => 'margin-right',
+			'marginTop' => 'margin-top',
+			'marginBottom' => 'margin-bottom',
+			'marginHeader' => 'margin-header',
+			'marginFooter' => 'margin-footer',
+			'fontSize' => 'font-size'
+		);
+		if (isset($backwardsCompatabilityOptionNames[$name])) {
+			$name = $backwardsCompatabilityOptionNames[$name];
+		}
 		if (!isset($this->options[$name])) {
 			throw new \Famelo\PDF\Error\UnknownGeneratorOptionException('The option "' . $name . '" you\'re trying to set does not exist. This generator supports these options: ' . chr(10) . chr(10) . implode(chr(10), array_keys($this->options)), 1421314368);
 		}
@@ -74,14 +86,14 @@ class MpdfGenerator implements PdfGeneratorInterface {
 		$mpdf = new \mPDF(
 			$this->options['encoding'],
 			$this->options['format'],
-			$this->options['fontSize'],
+			$this->options['font-size'],
 			$this->options['font'],
-			$this->options['marginLeft'],
-			$this->options['marginRight'],
-			$this->options['marginTop'],
-			$this->options['marginBottom'],
-			$this->options['marginHeader'],
-			$this->options['marginFooter'],
+			$this->options['margin-left'],
+			$this->options['margin-right'],
+			$this->options['margin-top'],
+			$this->options['margin-bottom'],
+			$this->options['margin-header'],
+			$this->options['margin-footer'],
 			$this->options['orientation']
 		);
 

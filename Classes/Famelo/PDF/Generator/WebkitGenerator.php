@@ -75,14 +75,12 @@ class WebkitGenerator implements PdfGeneratorInterface {
 		header('Content-Type: application/pdf');
 		header('Content-Disposition: inline; filename="' . $filename . '"');
 		echo $this->snappyPdf->getOutputFromHtml($content, $this->options);
-		exit();
 	}
 
 	public function downloadPdf($content, $filename = NULL) {
 		header('Content-Type: application/pdf');
 		header('Content-Disposition: attachment; filename="' . $filename . '"');
 		echo $this->snappyPdf->getOutputFromHtml($content, $this->options);
-		exit();
 	}
 
 	public function savePdf($content, $filename) {

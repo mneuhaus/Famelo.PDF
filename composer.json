@@ -3,7 +3,8 @@
   "type":"typo3-flow-package",
   "description":"Provides a quick and simple way to generate a PDF from a Fluid Template through the MPDF library",
   "require": {
-    "typo3\/flow": "*"
+    "typo3\/flow": "*",
+    "mpdf\/mpdf": "*"
   },
   "suggest": {
     "knplabs/knp-snappy":  "wkhtmltopdf wrapper to use the WebkitGenerator",

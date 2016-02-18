@@ -175,6 +175,7 @@ class Document {
 		$this->setOptionsByViewHelper($generator);
 		$generator->setFormat($this->format);
 		$generator->sendPdf($content, $filename);
+		exit();
 	}
 
 	public function download($filename = NULL) {
@@ -183,6 +184,7 @@ class Document {
 		$this->setOptionsByViewHelper($generator);
 		$generator->setFormat($this->format);
 		$generator->downloadPdf($content, $filename);
+		exit();
 	}
 
 	public function save($filename) {

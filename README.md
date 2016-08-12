@@ -66,6 +66,10 @@ If format is defined as a string, the final orientation parameter will be ignore
 
 *Ledger and Tabloid are standard formats with the same page size but different orientation (Ledger is landscape, and Tabloid is portrait). mPDF treats these identically; if you wish to use Ledger, you should specify "Ledger-L" for landscape.
 
+Page numbering in Fluid
+----------------------------
+
+If you want to use mPDFs page numbering variables like {PAGENO} or {nbpg} you have to wrap them in a CDATA section, to keep  Fluid from interpreting them as variables.
 
 PDF Generator Implementation
 ----------------------------

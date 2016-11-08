@@ -12,6 +12,5 @@ Famelo:
 TYPO3:
   Flow:
     object:
-      excludeClasses:
-        'knplabs.*': ['.*']
-        'itbz.*': ['.*']
+      includeClasses:
+        'mpdf.*': ['.*']

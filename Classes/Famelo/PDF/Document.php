@@ -18,17 +18,17 @@ use TYPO3\Flow\Annotations as Flow;
  * @Flow\Scope("prototype")
  */
 class Document {
-	/*
+	/**
 	 * @var string
 	 */
 	protected $templatePath = 'resource://@package/Private/Documents/@document.html';
 
-	/*
+	/**
 	 * @var string
 	 */
 	protected $layoutRootPath = 'resource://@package/Private/Layouts/';
 
-	/*
+	/**
 	 * @var string
 	 */
 	protected $partialRootPath = 'resource://@package/Private/Partials/';
@@ -63,14 +63,14 @@ class Document {
 
 	/**
 	 *
-	 * @Flow\Inject(setting="DefaultGenerator", package="Famelo.PDF")
+	 * @Flow\InjectConfiguration(setting="DefaultGenerator", package="Famelo.PDF")
 	 * @var string
 	 */
 	protected $defaultGenerator;
 
 	/**
 	 *
-	 * @Flow\Inject(setting="DefaultGeneratorOptions", package="Famelo.PDF")
+	 * @Flow\InjectConfiguration(setting="DefaultGeneratorOptions", package="Famelo.PDF")
 	 * @var array
 	 */
 	protected $defaultGeneratorOptions;

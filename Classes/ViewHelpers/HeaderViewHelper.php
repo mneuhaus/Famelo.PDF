@@ -1,5 +1,5 @@
 <?php
-namespace Famelo\PDF\ViewHelpers\Fpdi;
+namespace Famelo\PDF\ViewHelpers;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Famelo.Pdf".            *
@@ -11,13 +11,12 @@ namespace Famelo\PDF\ViewHelpers\Fpdi;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
+use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * @api
  */
-class TemplateViewHelper extends AbstractViewHelper {
-
+class HeaderViewHelper extends AbstractViewHelper {
 	
 	/**
 	 * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
@@ -25,16 +24,6 @@ class TemplateViewHelper extends AbstractViewHelper {
 	 * @var boolean
 	 */
 	protected $escapeOutput = FALSE;
-
-	/**
-	 * Constructor
-	 *
-	 * @api
-	 */
-	public function __construct() {
-		$this->registerArgument('path', 'string', 'template path', TRUE);
-	}
-
 	/**
 	 * This tag will not be rendered at all.
 	 *
@@ -42,6 +31,7 @@ class TemplateViewHelper extends AbstractViewHelper {
 	 * @api
 	 */
 	public function render() {
-		$this->viewHelperVariableContainer->add('Famelo\Pdf\ViewHelpers\Fpdi\TemplateViewHelper', 'template', $this->arguments['path']);
+		$header = $this->renderChildren();
+		$this->viewHelperVariableContainer->add('Famelo\Pdf\ViewHelpers\HeaderViewHelper', 'header', $header);
 	}
 }

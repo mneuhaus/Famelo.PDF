@@ -1,5 +1,5 @@
 <?php
-namespace Famelo\PDF\Generator;
+namespace Famelo\PDF\Error;
 
 /*                                                                        *
  * This script belongs to the FLOW3 package "Famelo.PDF".                 *
@@ -11,23 +11,11 @@ namespace Famelo\PDF\Generator;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
-
-interface PdfGeneratorInterface {
-
-	public function setFormat($format);
-
-	public function setHeader($content);
-
-	public function setFooter($content);
-
-	public function setOption($name, $value);
-
-	public function sendPdf($content, $filename = NULL);
-
-	public function downloadPdf($content, $filename = NULL);
-
-	public function savePdf($content, $filename);
+/**
+ * "Unknown Class" Exception
+ *
+ * @api
+ */
+class UnknownGeneratorOptionException extends \Neos\Flow\Error\Exception {
 
 }
-?>

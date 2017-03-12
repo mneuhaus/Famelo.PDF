@@ -9,7 +9,7 @@ Famelo:
     #DefaultGeneratorOptions:
     #  Binary: '/usr/local/bin/wkhtmltopdf'
 
-TYPO3:
+Neos:
   Flow:
     object:
       includeClasses:

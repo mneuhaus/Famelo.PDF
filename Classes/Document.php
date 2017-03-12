@@ -12,7 +12,7 @@ namespace Famelo\PDF;
  *                                                                        */
 
 use Famelo\PDF\Generator\PdfGeneratorInterface;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 
 /**
  * @Flow\Scope("prototype")

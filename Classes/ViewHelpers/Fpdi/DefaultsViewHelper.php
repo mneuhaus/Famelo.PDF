@@ -1,5 +1,5 @@
 <?php
-namespace Famelo\PDF\ViewHelpers;
+namespace Famelo\PDF\ViewHelpers\Fpdi;
 
 /*                                                                        *
  * This script belongs to the TYPO3 Flow package "Famelo.Pdf".            *
@@ -11,12 +11,13 @@ namespace Famelo\PDF\ViewHelpers;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
+use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * @api
  */
-class FooterViewHelper extends AbstractViewHelper {
+class DefaultsViewHelper extends AbstractViewHelper {
+
 	
 	/**
 	 * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
@@ -24,6 +25,19 @@ class FooterViewHelper extends AbstractViewHelper {
 	 * @var boolean
 	 */
 	protected $escapeOutput = FALSE;
+
+	/**
+	 * Constructor
+	 *
+	 * @api
+	 */
+	public function __construct() {
+		$this->registerArgument('font', 'string', 'font name', FALSE);
+		$this->registerArgument('font-size', 'integer', 'font size', FALSE);
+		$this->registerArgument('font-weight', 'string', 'font weight', FALSE);
+		$this->registerArgument('color', 'string', 'font color', FALSE);
+	}
+
 	/**
 	 * This tag will not be rendered at all.
 	 *
@@ -31,7 +45,6 @@ class FooterViewHelper extends AbstractViewHelper {
 	 * @api
 	 */
 	public function render() {
-		$content = $this->renderChildren();
-		$this->viewHelperVariableContainer->add('Famelo\Pdf\ViewHelpers\FooterViewHelper', 'footer', $content);
+		$this->viewHelperVariableContainer->add('Famelo\Pdf\ViewHelpers\Fpdi\DefaultsViewHelper', 'defaults', $this->arguments);
 	}
 }

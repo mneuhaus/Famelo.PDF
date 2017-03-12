@@ -11,7 +11,7 @@ namespace Famelo\PDF\Generator;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 require_once(FLOW_PATH_PACKAGES . 'Application/Famelo.PDF/Resources/Private/PHP/pdfcrowd/pdfcrowd.php');
 
 /**

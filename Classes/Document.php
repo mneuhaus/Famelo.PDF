@@ -11,7 +11,6 @@ namespace Famelo\PDF;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use Neos\Flow\Mvc\View\ViewInterface;
 use Famelo\PDF\Generator\PdfGeneratorInterface;
 use Neos\Flow\Annotations as Flow;
 

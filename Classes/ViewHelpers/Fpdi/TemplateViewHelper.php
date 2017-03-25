@@ -17,31 +17,29 @@ use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
  * @api
  */
 class TemplateViewHelper extends AbstractViewHelper {
+    /**
+     * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
+     * @see AbstractViewHelper::isOutputEscapingEnabled()
+     * @var boolean
+     */
+    protected $escapeOutput = FALSE;
 
-	
-	/**
-	 * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
-	 * @see AbstractViewHelper::isOutputEscapingEnabled()
-	 * @var boolean
-	 */
-	protected $escapeOutput = FALSE;
+    /**
+     * Constructor
+     *
+     * @api
+     */
+    public function __construct() {
+        $this->registerArgument('path', 'string', 'template path', TRUE);
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @api
-	 */
-	public function __construct() {
-		$this->registerArgument('path', 'string', 'template path', TRUE);
-	}
-
-	/**
-	 * This tag will not be rendered at all.
-	 *
-	 * @return void
-	 * @api
-	 */
-	public function render() {
-		$this->viewHelperVariableContainer->add('Famelo\Pdf\ViewHelpers\Fpdi\TemplateViewHelper', 'template', $this->arguments['path']);
-	}
+    /**
+     * This tag will not be rendered at all.
+     *
+     * @return void
+     * @api
+     */
+    public function render() {
+        $this->viewHelperVariableContainer->add('Famelo\Pdf\ViewHelpers\Fpdi\TemplateViewHelper', 'template', $this->arguments['path']);
+    }
 }

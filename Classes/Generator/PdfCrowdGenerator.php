@@ -2,7 +2,7 @@
 namespace Famelo\PDF\Generator;
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.PDF".                 *
+ * This script belongs to the FLOW package "Famelo.PDF".                  *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -114,4 +114,3 @@ class PdfCrowdGenerator implements PdfGeneratorInterface {
         file_put_contents($filename, $result);
     }
 }
-?>

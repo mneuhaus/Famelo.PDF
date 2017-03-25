@@ -19,88 +19,87 @@ use Neos\Flow\Exception;
  */
 class RemoteGenerator implements PdfGeneratorInterface {
 
-	/**
-	 * @var mixed
-	 */
-	protected $format;
+    /**
+     * @var mixed
+     */
+    protected $format;
 
-	/**
-	 * @var string
-	 */
-	protected $options = array(
-		'margin-bottom' => 0,
-		'margin-top' => 0,
-		'margin-left' => 0,
-		'margin-right' => 0
-	);
+    /**
+     * @var string
+     */
+    protected $options = array(
+        'margin-bottom' => 0,
+        'margin-top' => 0,
+        'margin-left' => 0,
+        'margin-right' => 0
+    );
 
-	/**
-	 * @var string
-	 */
-	protected $host;
+    /**
+     * @var string
+     */
+    protected $host;
 
-	/**
-	 * @var object
-	 */
-	protected $snappyPdf;
+    /**
+     * @var object
+     */
+    protected $snappyPdf;
 
-	public function __construct($options) {
-		if (!isset($options['host'])) {
-			throw Exception('You need to configure you\'r a remote host in "Famelo.Pdf.DefaultGeneratorOptions.host".');
-		}
-		$this->host = $options['host'];
-	}
+    public function __construct($options) {
+        if (!isset($options['host'])) {
+            throw Exception('You need to configure you\'r a remote host in "Famelo.Pdf.DefaultGeneratorOptions.host".');
+        }
+        $this->host = $options['host'];
+    }
 
-	public function setFormat($format) {
-		if (substr($format, -2) == '-L') {
-			$this->snappyPdf->setOption('orientation', 'Landscape');
-			$format = substr($format, 0, -2);
-		}
-		$this->options['page-size'] = $format;
-	}
+    public function setFormat($format) {
+        if (substr($format, -2) == '-L') {
+            $this->snappyPdf->setOption('orientation', 'Landscape');
+            $format = substr($format, 0, -2);
+        }
+        $this->options['page-size'] = $format;
+    }
 
-	public function setHeader($content) {
-		$this->options['header-html'] = $content;
-	}
+    public function setHeader($content) {
+        $this->options['header-html'] = $content;
+    }
 
-	public function setFooter($content) {
-		$this->options['footer-html'] = $content;
-	}
+    public function setFooter($content) {
+        $this->options['footer-html'] = $content;
+    }
 
-	public function setOption($name, $value) {
-		$this->options[$name] = $value;
-	}
+    public function setOption($name, $value) {
+        $this->options[$name] = $value;
+    }
 
-	public function sendPdf($content, $filename = NULL) {
-		header('Content-Type: application/pdf');
-		header('Content-Disposition: inline; filename="' . $filename . '"');
-		echo $this->generate($content);
-	}
+    public function sendPdf($content, $filename = NULL) {
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: inline; filename="' . $filename . '"');
+        echo $this->generate($content);
+    }
 
-	public function downloadPdf($content, $filename = NULL) {
-		header('Content-Type: application/pdf');
-		header('Content-Disposition: attachment; filename="' . $filename . '"');
-		echo $this->generate($content);
-	}
+    public function downloadPdf($content, $filename = NULL) {
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        echo $this->generate($content);
+    }
 
-	public function savePdf($content, $filename) {
-		$result = $this->generate($content);
-		file_put_contents($filename, $result);
-	}
+    public function savePdf($content, $filename) {
+        $result = $this->generate($content);
+        file_put_contents($filename, $result);
+    }
 
-	public function generate($content) {
-		$this->options['content'] = $content;
+    public function generate($content) {
+        $this->options['content'] = $content;
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->host);
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($this->options));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->host);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($this->options));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-		$result = curl_exec ($ch);
+        $result = curl_exec ($ch);
 
-		curl_close ($ch);
-		return $result;
-	}
+        curl_close ($ch);
+        return $result;
+    }
 }
-?>

@@ -17,21 +17,22 @@ use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
  * @api
  */
 class FooterViewHelper extends AbstractViewHelper {
-	
-	/**
-	 * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
-	 * @see AbstractViewHelper::isOutputEscapingEnabled()
-	 * @var boolean
-	 */
-	protected $escapeOutput = FALSE;
-	/**
-	 * This tag will not be rendered at all.
-	 *
-	 * @return void
-	 * @api
-	 */
-	public function render() {
-		$content = $this->renderChildren();
-		$this->viewHelperVariableContainer->add('Famelo\Pdf\ViewHelpers\FooterViewHelper', 'footer', $content);
-	}
+
+    /**
+     * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
+     * @see AbstractViewHelper::isOutputEscapingEnabled()
+     * @var boolean
+     */
+    protected $escapeOutput = FALSE;
+
+    /**
+     * This tag will not be rendered at all.
+     *
+     * @return void
+     * @api
+     */
+    public function render() {
+        $content = $this->renderChildren();
+        $this->viewHelperVariableContainer->add('Famelo\Pdf\ViewHelpers\FooterViewHelper', 'footer', $content);
+    }
 }

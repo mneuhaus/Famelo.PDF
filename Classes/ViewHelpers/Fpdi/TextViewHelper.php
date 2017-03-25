@@ -17,43 +17,41 @@ use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
  * @api
  */
 class TextViewHelper extends AbstractViewHelper {
+    /**
+     * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
+     * @see AbstractViewHelper::isOutputEscapingEnabled()
+     * @var boolean
+     */
+    protected $escapeOutput = FALSE;
 
-	
-	/**
-	 * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
-	 * @see AbstractViewHelper::isOutputEscapingEnabled()
-	 * @var boolean
-	 */
-	protected $escapeOutput = FALSE;
+    /**
+     * Constructor
+     *
+     * @api
+     */
+    public function __construct() {
+        $this->registerArgument('font', 'string', 'font name', FALSE);
+        $this->registerArgument('font-size', 'integer', 'font size', FALSE);
+        $this->registerArgument('font-weight', 'string', 'font weight', FALSE);
+        $this->registerArgument('color', 'string', 'font color', FALSE);
+        $this->registerArgument('x', 'string', 'x position', FALSE);
+        $this->registerArgument('y', 'string', 'y position', FALSE);
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @api
-	 */
-	public function __construct() {
-		$this->registerArgument('font', 'string', 'font name', FALSE);
-		$this->registerArgument('font-size', 'integer', 'font size', FALSE);
-		$this->registerArgument('font-weight', 'string', 'font weight', FALSE);
-		$this->registerArgument('color', 'string', 'font color', FALSE);
-		$this->registerArgument('x', 'string', 'x position', FALSE);
-		$this->registerArgument('y', 'string', 'y position', FALSE);
-	}
-
-	/**
-	 * This tag will not be rendered at all.
-	 *
-	 * @return void
-	 * @api
-	 */
-	public function render() {
-		$texts = array();
-		if ($this->viewHelperVariableContainer->exists('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts')) {
-			$texts = $this->viewHelperVariableContainer->get('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts');
-		}
-		$text = $this->arguments;
-		$text['content'] = $this->renderChildren();
-		$texts[] = $text;
-		$this->viewHelperVariableContainer->addOrUpdate('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts', $texts);
-	}
+    /**
+     * This tag will not be rendered at all.
+     *
+     * @return void
+     * @api
+     */
+    public function render() {
+        $texts = array();
+        if ($this->viewHelperVariableContainer->exists('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts')) {
+            $texts = $this->viewHelperVariableContainer->get('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts');
+        }
+        $text = $this->arguments;
+        $text['content'] = $this->renderChildren();
+        $texts[] = $text;
+        $this->viewHelperVariableContainer->addOrUpdate('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts', $texts);
+    }
 }

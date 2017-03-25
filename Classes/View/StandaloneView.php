@@ -2,7 +2,7 @@
 namespace Famelo\PDF\View;
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.Messaging".           *
+ * This script belongs to the FLOW package "Famelo.PDF".                  *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -12,6 +12,7 @@ namespace Famelo\PDF\View;
  *                                                                        */
 
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Mvc\View\ViewInterface;
 
 /**
  * A standalone template view.
@@ -21,13 +22,17 @@ use Neos\Flow\Annotations as Flow;
  * @api
  */
 class StandaloneView extends \Neos\FluidAdaptor\View\StandaloneView {
-	public function initializeObject() {
-		parent::initializeObject();
+    public function __construct() {
+        parent::__construct();
+    }
 
-		$this->request->setFormat('html');
-	}
+    public function initializeObject() {
+        parent::initializeObject();
 
-	public function getViewHelperVariableContainer() {
-		return $this->baseRenderingContext->getViewHelperVariableContainer();
-	}
+        $this->request->setFormat('html');
+    }
+
+    public function getViewHelperVariableContainer() {
+        return $this->baseRenderingContext->getViewHelperVariableContainer();
+    }
 }

@@ -2,7 +2,7 @@
 namespace Famelo\PDF;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow framework.                       *
+ * This script belongs to the Neos Flow framework.                        *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -15,16 +15,15 @@ use Neos\Flow\Core\Bootstrap;
 use Neos\Flow\Package\Package as BasePackage;
 
 /**
- * The TYPO3 Flow Package
- *
+ * The Neos Flow Package
  */
 class Package extends BasePackage {
-	/**
-	 * Invokes custom PHP code directly after the package manager has been initialized.
-	 *
-	 * @param \Neos\Flow\Core\Bootstrap $bootstrap The current bootstrap
-	 * @return void
-	 */
-	public function boot(Bootstrap $bootstrap) {
-	}
+    /**
+     * Invokes custom PHP code directly after the package manager has been initialized.
+     *
+     * @param Bootstrap $bootstrap The current bootstrap
+     * @return void
+     */
+    public function boot(Bootstrap $bootstrap) {
+    }
 }

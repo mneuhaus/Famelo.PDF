@@ -22,16 +22,18 @@ use Neos\Flow\Mvc\View\ViewInterface;
  * @api
  */
 class StandaloneView extends \Neos\FluidAdaptor\View\StandaloneView {
-    public function __construct() {
-        parent::__construct();
-    }
-
+    /**
+    * Initialize Object
+    */
     public function initializeObject() {
         parent::initializeObject();
 
         $this->request->setFormat('html');
     }
 
+    /**
+     * Get ViewHelper Variable Container
+     */
     public function getViewHelperVariableContainer() {
         return $this->baseRenderingContext->getViewHelperVariableContainer();
     }

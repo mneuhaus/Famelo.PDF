@@ -11,11 +11,13 @@ namespace Famelo\PDF\Error;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
+use Neos\Flow\Error\Exception;
+
 /**
  * "Unknown Class" Exception
  *
  * @api
  */
-class UnknownGeneratorOptionException extends \Neos\Flow\Error\Exception {
+class UnknownGeneratorOptionException extends Exception {
 
 }

@@ -1,4 +1,0 @@
-#Famelo\PDF\View\StandaloneView:
-#  properties:
-#    renderingContext:
-#      object: Neos\FluidAdaptor\Core\Rendering\RenderingContext

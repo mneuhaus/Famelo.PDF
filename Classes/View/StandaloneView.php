@@ -2,7 +2,7 @@
 namespace Famelo\PDF\View;
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.Messaging".           *
+ * This script belongs to the FLOW package "Famelo.PDF".                  *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -11,7 +11,8 @@ namespace Famelo\PDF\View;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Mvc\View\ViewInterface;
 
 /**
  * A standalone template view.
@@ -20,14 +21,20 @@ use TYPO3\Flow\Annotations as Flow;
  *
  * @api
  */
-class StandaloneView extends \TYPO3\Fluid\View\StandaloneView {
-	public function initializeObject() {
-		parent::initializeObject();
+class StandaloneView extends \Neos\FluidAdaptor\View\StandaloneView {
+    /**
+    * Initialize Object
+    */
+    public function initializeObject() {
+        parent::initializeObject();
 
-		$this->request->setFormat('html');
-	}
+        $this->request->setFormat('html');
+    }
 
-	public function getViewHelperVariableContainer() {
-		return $this->baseRenderingContext->getViewHelperVariableContainer();
-	}
+    /**
+     * Get ViewHelper Variable Container
+     */
+    public function getViewHelperVariableContainer() {
+        return $this->baseRenderingContext->getViewHelperVariableContainer();
+    }
 }

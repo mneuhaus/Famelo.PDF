@@ -1,8 +1,8 @@
 <?php
-namespace Famelo\PDF;
+namespace Famelo\PDF\Generator;
 
 /*                                                                        *
- * This script belongs to the TYPO3 Flow framework.                       *
+ * This script belongs to the FLOW3 package "Famelo.PDF".                 *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License, either version 3   *
@@ -11,20 +11,23 @@ namespace Famelo\PDF;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Core\Bootstrap;
-use TYPO3\Flow\Package\Package as BasePackage;
+use Neos\Flow\Annotations as Flow;
 
-/**
- * The TYPO3 Flow Package
- *
- */
-class Package extends BasePackage {
-	/**
-	 * Invokes custom PHP code directly after the package manager has been initialized.
-	 *
-	 * @param \TYPO3\Flow\Core\Bootstrap $bootstrap The current bootstrap
-	 * @return void
-	 */
-	public function boot(Bootstrap $bootstrap) {
-	}
+interface PdfGeneratorInterface {
+
+	public function setFormat($format);
+
+	public function setHeader($content);
+
+	public function setFooter($content);
+
+	public function setOption($name, $value);
+
+	public function sendPdf($content, $filename = NULL);
+
+	public function downloadPdf($content, $filename = NULL);
+
+	public function savePdf($content, $filename);
+
 }
+?>

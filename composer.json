@@ -4,7 +4,7 @@
     "description": "Provides a quick and simple way to generate a PDF from a Fluid Template through the MPDF library",
     "require": {
         "neos/flow": "~4.0",
-        "mpdf/mpdf": "*"
+        "mpdf/mpdf": ">7.0"
     },
     "suggest": {
         "knplabs/knp-snappy": "wkhtmltopdf wrapper to use the WebkitGenerator",

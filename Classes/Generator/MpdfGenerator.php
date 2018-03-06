@@ -41,14 +41,14 @@ class MpdfGenerator implements PdfGeneratorInterface {
         'encoding' => '',
         'format' => 'A4',
         'orientation' => 'P',
-        'font-size' => 0,
-        'font' => '',
-        'margin-left' => 15,
-        'margin-right' => 15,
-        'margin-top' => 16,
-        'margin-bottom' => 16,
-        'margin-header' => 9,
-        'margin-footer' => 9,
+        'default_font_size' => 0,
+        'default_font' => '',
+        'margin_left' => 15,
+        'margin_right' => 15,
+        'margin_top' => 16,
+        'margin_bottom' => 16,
+        'margin_header' => 9,
+        'margin_footer' => 9,
     );
 
     public function setFormat($format) {
@@ -65,13 +65,21 @@ class MpdfGenerator implements PdfGeneratorInterface {
 
     public function setOption($name, $value) {
         $backwardsCompatabilityOptionNames = array(
-            'marginLeft' => 'margin-left',
-            'marginRight' => 'margin-right',
-            'marginTop' => 'margin-top',
-            'marginBottom' => 'margin-bottom',
-            'marginHeader' => 'margin-header',
-            'marginFooter' => 'margin-footer',
-            'fontSize' => 'font-size'
+            'marginLeft' => 'margin_left',
+            'marginRight' => 'margin_right',
+            'marginTop' => 'margin_top',
+            'marginBottom' => 'margin_bottom',
+            'marginHeader' => 'margin_header',
+            'marginFooter' => 'margin_footer',
+            'fontSize' => 'default_font_size',
+            'margin-left' => 'margin_left',
+            'margin-right' => 'margin_right',
+            'margin-top' => 'margin_top',
+            'margin-bottom' => 'margin_bottom',
+            'margin-header' => 'margin_header',
+            'margin-footer' => 'margin_footer',
+            'font-size' => 'default_font_size',
+            'font' => 'default_font'
         );
         if (isset($backwardsCompatabilityOptionNames[$name])) {
             $name = $backwardsCompatabilityOptionNames[$name];
@@ -86,14 +94,14 @@ class MpdfGenerator implements PdfGeneratorInterface {
         $mpdf = new \Mpdf\Mpdf(
             array('encoding' => $this->options['encoding'],
                 'format' => $this->options['format'],
-                'font-size' => $this->options['font-size'],
-                'font' => $this->options['font'],
-                'margin-left' => $this->options['margin-left'],
-                'margin-right' => $this->options['margin-right'],
-                'margin-top' => $this->options['margin-top'],
-                'margin-bottom' => $this->options['margin-bottom'],
-                'margin-header' => $this->options['margin-header'],
-                'margin-footer' => $this->options['margin-footer'],
+                'default_font_size' => $this->options['default_font_size'],
+                'default_font' => $this->options['default_font'],
+                'margin_left' => $this->options['margin_left'],
+                'margin_right' => $this->options['margin_right'],
+                'margin_top' => $this->options['margin_top'],
+                'margin_bottom' => $this->options['margin_bottom'],
+                'margin_header' => $this->options['margin_header'],
+                'margin_footer' => $this->options['margin_footer'],
                 'orientation' => $this->options['orientation'])
         );
 

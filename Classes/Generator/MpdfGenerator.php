@@ -83,18 +83,18 @@ class MpdfGenerator implements PdfGeneratorInterface {
     }
 
     public function getMpdfInstance() {
-        $mpdf = new \mPDF(
-            $this->options['encoding'],
-            $this->options['format'],
-            $this->options['font-size'],
-            $this->options['font'],
-            $this->options['margin-left'],
-            $this->options['margin-right'],
-            $this->options['margin-top'],
-            $this->options['margin-bottom'],
-            $this->options['margin-header'],
-            $this->options['margin-footer'],
-            $this->options['orientation']
+        $mpdf = new \Mpdf\Mpdf(
+            array('encoding' => $this->options['encoding'],
+                'format' => $this->options['format'],
+                'font-size' => $this->options['font-size'],
+                'font' => $this->options['font'],
+                'margin-left' => $this->options['margin-left'],
+                'margin-right' => $this->options['margin-right'],
+                'margin-top' => $this->options['margin-top'],
+                'margin-bottom' => $this->options['margin-bottom'],
+                'margin-header' => $this->options['margin-header'],
+                'margin-footer' => $this->options['margin-footer'],
+                'orientation' => $this->options['orientation'])
         );
 
         if ($this->footer !== NULL) {

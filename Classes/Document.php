@@ -193,6 +193,17 @@ class Document {
     }
 
     /**
+     * @return string
+     */
+    public function getStream() {
+        $content = $this->render();
+        $generator = $this->getGenerator();
+        $this->setOptionsByViewHelper($generator);
+        $generator->setFormat($this->format);
+        return $generator->sendPdf($content);
+    }
+
+    /**
      * @param string $filename
      */
     public function send($filename = NULL) {

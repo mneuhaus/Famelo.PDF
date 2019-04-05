@@ -39,7 +39,7 @@ function out_stream($name, $use_ssl)
 
 $html = "<html><body>Uploaded content!</body></html>";
 $client = new Pdfcrowd($argv[1], $argv[2]);
-foreach(array(False, True) as $i => $use_ssl) {
+foreach(array(false, true) as $i => $use_ssl) {
     $client->useSSL($use_ssl);
     try
     {
@@ -67,24 +67,24 @@ $tests = array(
     'setPageHeight' => -1,
     'setHorizontalMargin' => 0,
     'setVerticalMargin' => 72,
-    'setEncrypted' => True,
+    'setEncrypted' => true,
     'setUserPassword' => 'userpwd',
     'setOwnerPassword' => 'ownerpwd',
-    'setNoPrint' => True,
-    'setNoModify' => True,
-    'setNoCopy' => True,
+    'setNoPrint' => true,
+    'setNoModify' => true,
+    'setNoCopy' => true,
     'setPageLayout' => Pdfcrowd::CONTINUOUS,
     'setPageMode' => Pdfcrowd::FULLSCREEN,
     'setFooterText' => '%p/%n | source %u',
-    'enableImages' => False,
-    'enableBackgrounds' => False,
+    'enableImages' => false,
+    'enableBackgrounds' => false,
     'setHtmlZoom' => 300,
-    'enableJavaScript' => False,
-    'enableHyperlinks' => False,
+    'enableJavaScript' => false,
+    'enableHyperlinks' => false,
     'setDefaultTextEncoding' => 'iso-8859-1',
-    'usePrintMedia' => True,
+    'usePrintMedia' => true,
     'setMaxPages' => 1,
-    'enablePdfcrowdLogo' => True,
+    'enablePdfcrowdLogo' => true,
     'setInitialPdfZoomType' => Pdfcrowd::FIT_PAGE,
     'setInitialPdfExactZoom' => 113,
     'setPdfScalingFactor' => 0.5,
@@ -94,7 +94,7 @@ $tests = array(
     'setHeaderUrl' => 'http://s3.pdfcrowd.com/test-resources/header.html',
     'setAuthor' => 'Custom Author',
     'setPageBackgroundColor' => 'ee82EE',
-    'setTransparentBackground' => True,
+    'setTransparentBackground' => true,
     'setUserAgent' => "test user agent"
     );
 
@@ -105,7 +105,7 @@ try
         $client = new Pdfcrowd($argv[1], $argv[2]);
         $client->$method($arg);
         $client->setVerticalMargin('1in');
-        $client->convertFile($test_dir . '/in/simple.html', out_stream(strtolower($method), False));
+        $client->convertFile($test_dir . '/in/simple.html', out_stream(strtolower($method), false));
     }
 }
 catch(PdfcrowdException $e)
@@ -117,7 +117,7 @@ catch(PdfcrowdException $e)
 // margins
 $client = new Pdfcrowd($argv[1], $argv[2]);
 $client->setPageMargins('0.25in', '0.5in', '0.75in', '1.0in');
-$client->convertHtml('<div style="background-color:red;height:100%">4 margins</div>', out_stream('4margins', False));
+$client->convertHtml('<div style="background-color:red;height:100%">4 margins</div>', out_stream('4margins', false));
 
 
 // expected failures
@@ -130,7 +130,7 @@ $failures = array(
     array("convertURI", "HtTp://s3.pdfcrowd.com/this/url/does/not/exist/", "Received a non-2xx response")
     );
 $client = new Pdfcrowd($argv[1], $argv[2]);
-$client->setFailOnNon200(True);
+$client->setFailOnNon200(true);
 foreach($failures as $failure) {
     try {
         $client->$failure[0]($failure[1]);

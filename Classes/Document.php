@@ -200,7 +200,7 @@ class Document {
         $generator = $this->getGenerator();
         $this->setOptionsByViewHelper($generator);
         $generator->setFormat($this->format);
-        return $generator->sendPdf($content);
+        return $generator->getPdfStream($content);
     }
 
     /**

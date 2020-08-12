@@ -163,7 +163,7 @@ Possible reasons:
         $arr = array('username' => $this->fields['username'],
                      'key' => $this->fields['key']);
         $postfields = http_build_query($arr, '', '&');
-        $ntokens = $this->http_post($uri, $postfields, NULL);
+        $ntokens = $this->http_post($uri, $postfields, null);
         return (int)$ntokens;
     }
 
@@ -203,7 +203,7 @@ Possible reasons:
       $this->fields['margin_left'] = $left;
     }
 
-    function setEncrypted($val=True) {
+    function setEncrypted($val=true) {
         $this->set_or_unset($val, 'encrypted');
     }
     
@@ -215,15 +215,15 @@ Possible reasons:
         $this->set_or_unset($pwd, 'owner_pwd');
     }
     
-    function setNoPrint($val=True) {
+    function setNoPrint($val=true) {
         $this->set_or_unset($val, 'no_print');
     }
     
-    function setNoModify($val=True) {
+    function setNoModify($val=true) {
         $this->set_or_unset($val, 'no_modify');
     }
     
-    function setNoCopy($val=True) {
+    function setNoCopy($val=true) {
         $this->set_or_unset($val, 'no_copy');
     }
 
@@ -251,11 +251,11 @@ Possible reasons:
         $this->set_or_unset($value, 'footer_text');
     }
     
-    function enableImages($value=True) {
+    function enableImages($value=true) {
         $this->set_or_unset(!$value, 'no_images');
     }
     
-    function enableBackgrounds($value=True) {
+    function enableBackgrounds($value=true) {
         $this->set_or_unset(!$value, 'no_backgrounds');
     }
     
@@ -263,11 +263,11 @@ Possible reasons:
         $this->set_or_unset($value, 'html_zoom');
     }
     
-    function enableJavaScript($value=True) {
+    function enableJavaScript($value=true) {
         $this->set_or_unset(!$value, 'no_javascript');
     }
     
-    function enableHyperlinks($value=True) {
+    function enableHyperlinks($value=true) {
         $this->set_or_unset(!$value, 'no_hyperlinks');
     }
     
@@ -275,7 +275,7 @@ Possible reasons:
         $this->set_or_unset($value, 'text_encoding');
     }
     
-    function usePrintMedia($value=True) {
+    function usePrintMedia($value=true) {
         $this->set_or_unset($value, 'use_print_media');
     }
     
@@ -283,7 +283,7 @@ Possible reasons:
         $this->fields['max_pages'] = $value;
     }
     
-    function enablePdfcrowdLogo($value=True) {
+    function enablePdfcrowdLogo($value=true) {
         $this->set_or_unset($value, 'pdfcrowd_logo');
     }
 
@@ -334,7 +334,7 @@ Possible reasons:
         $this->fields['page_background_color'] = $value;
     }
     
-    function setTransparentBackground($value=True) {
+    function setTransparentBackground($value=true) {
         $this->set_or_unset($value, 'transparent_background');
     }
 
@@ -356,7 +356,7 @@ Possible reasons:
         $this->fields["watermark_rotation"] = $angle;
     }
 
-    function setWatermarkInBackground($val=True) {
+    function setWatermarkInBackground($val=true) {
         $this->set_or_unset($val, "watermark_in_background");
     }
 
@@ -447,7 +447,7 @@ Links:
             throw new PdfcrowdException($error_str, $error_nr);            
         }
         else if ($this->http_code == 200) {
-            if ($outstream == NULL) {
+            if ($outstream == null) {
                 return $response;
             }
         } else {

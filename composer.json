@@ -4,7 +4,7 @@
     "description": "Provides a quick and simple way to generate a PDF from a Fluid Template through the MPDF library",
     "license": "LGPL-3.0-or-later",
     "require": {
-        "neos/flow": "^4.0 || ^5.0 || ^6.0 || ^7.0",
+        "neos/flow": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
         "mpdf/mpdf": ">7.0"
     },
     "suggest": {

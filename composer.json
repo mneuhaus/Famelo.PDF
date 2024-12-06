@@ -10,7 +10,8 @@
     "suggest": {
         "knplabs/knp-snappy": "wkhtmltopdf wrapper to use the WebkitGenerator",
         "itbz/fpdi": "fpdi library to use the FpdiGenerator",
-        "pdfcrowd/pdfcrowd": "pdfcrowd library to use the PdfCrowdGenerator"
+        "pdfcrowd/pdfcrowd": "pdfcrowd library to use the PdfCrowdGenerator",
+        "ext-curl": "curl extension to use the RemoteGenerator"
     },
     "autoload": {
         "psr-4": {

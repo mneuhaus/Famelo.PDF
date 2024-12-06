@@ -1,89 +1,90 @@
 <?php
+declare(strict_types=1);
+
 namespace Famelo\PDF\Generator;
 
-/*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.PDF".                 *
- *                                                                        *
- * It is free software; you can redistribute it and/or modify it under    *
- * the terms of the GNU Lesser General Public License, either version 3   *
- * of the License, or (at your option) any later version.                 *
- *                                                                        *
- * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+/*
+ * This file is part of the Famelo.PDF package.
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
-use Neos\Flow\Annotations as Flow;
+use Knp\Snappy\Pdf;
 use Neos\Flow\Exception;
 
-/**
- * @Flow\Scope("prototype")
- */
-class WebkitGenerator implements PdfGeneratorInterface {
+class WebkitGenerator implements PdfGeneratorInterface
+{
+    protected string|array $format;
 
-    /**
-     * @var mixed
-     */
-    protected $format;
-
-    /**
-     * @var string
-     */
-    protected $options = array(
+    protected array $options = [
         'margin-bottom' => 0,
         'margin-top' => 0,
         'margin-left' => 0,
         'margin-right' => 0
-    );
+    ];
 
-    /**
-     * @var object
-     */
-    protected $snappyPdf;
+    protected Pdf $snappyPdf;
 
-    public function __construct($options) {
-        if (!class_exists('\Knp\Snappy\Pdf')) {
+    public function __construct(array $options)
+    {
+        if (!class_exists(Pdf::class)) {
             throw new Exception('You need to install "knplabs/knp-snappy" to use the WebkitGenerator!');
         }
 
         if (!isset($options['Binary'])) {
-            throw new Exception('You need to configure you\'r wkhtmltopdf binary in "Famelo.Pdf.DefaultGeneratorOptions.Binary".');
+            throw new Exception('You need to configure your wkhtmltopdf binary in "Famelo.Pdf.DefaultGeneratorOptions.Binary".');
         }
 
-        $this->snappyPdf = new \Knp\Snappy\Pdf($options['Binary']);
+        $this->snappyPdf = new Pdf($options['Binary']);
     }
 
-    public function setFormat($format) {
-        if (substr($format, -2) == '-L') {
+    public function setFormat(string|array $format): void
+    {
+        if (str_ends_with($format, '-L')) {
             $this->snappyPdf->setOption('orientation', 'Landscape');
             $format = substr($format, 0, -2);
         }
         $this->options['page-size'] = $format;
     }
 
-    public function setHeader($content) {
+    public function setHeader(string $content): void
+    {
         $this->options['header-html'] = $content;
     }
 
-    public function setFooter($content) {
+    public function setFooter(string $content): void
+    {
         $this->options['footer-html'] = $content;
     }
 
-    public function setOption($name, $value) {
+    public function setOption(string $name, mixed $value): void
+    {
         $this->options[$name] = $value;
     }
 
-    public function sendPdf($content, $filename = NULL) {
+    public function sendPdf(string $content, string $filename = null): void
+    {
         header('Content-Type: application/pdf');
         header('Content-Disposition: inline; filename="' . $filename . '"');
         echo $this->snappyPdf->getOutputFromHtml($content, $this->options);
     }
 
-    public function downloadPdf($content, $filename = NULL) {
+    public function downloadPdf(string $content, string $filename = null): void
+    {
         header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         echo $this->snappyPdf->getOutputFromHtml($content, $this->options);
     }
 
-    public function savePdf($content, $filename) {
+    public function savePdf(string $content, string $filename): void
+    {
         $this->snappyPdf->generateFromHtml($content, $filename, $this->options);
+    }
+
+    public function getPdfStream(string $content): string
+    {
+        return $this->snappyPdf->getOutputFromHtml($content, $this->options);
     }
 }

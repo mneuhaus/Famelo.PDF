@@ -9,9 +9,10 @@
     },
     "suggest": {
         "knplabs/knp-snappy": "wkhtmltopdf wrapper to use the WebkitGenerator",
-        "itbz/fpdi": "fpdi library to use the FpdiGenerator"
+        "itbz/fpdi": "fpdi library to use the FpdiGenerator",
+        "pdfcrowd/pdfcrowd": "pdfcrowd library to use the PdfCrowdGenerator",
+        "ext-curl": "curl extension to use the RemoteGenerator"
     },
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Famelo\\PDF\\": "Classes"

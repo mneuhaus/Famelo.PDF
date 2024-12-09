@@ -1,33 +1,33 @@
 <?php
+declare(strict_types=1);
+
 namespace Famelo\PDF\Generator;
 
-/*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.PDF".                 *
- *                                                                        *
- * It is free software; you can redistribute it and/or modify it under    *
- * the terms of the GNU Lesser General Public License, either version 3   *
- * of the License, or (at your option) any later version.                 *
- *                                                                        *
- * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+/*
+ * This file is part of the Famelo.PDF package.
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
-use Neos\Flow\Annotations as Flow;
+interface PdfGeneratorInterface
+{
 
-interface PdfGeneratorInterface {
+    public function setFormat(string|array $format): void;
 
-	public function setFormat($format);
+    public function setHeader(string $content): void;
 
-	public function setHeader($content);
+    public function setFooter(string $content): void;
 
-	public function setFooter($content);
+    public function setOption(string $name, mixed $value): void;
 
-	public function setOption($name, $value);
+    public function sendPdf(string $content, string $filename = null): void;
 
-	public function sendPdf($content, $filename = NULL);
+    public function downloadPdf(string $content, string $filename = null): void;
 
-	public function downloadPdf($content, $filename = NULL);
+    public function savePdf(string $content, string $filename): void;
 
-	public function savePdf($content, $filename);
+    public function getPdfStream(string $content): string;
 
 }
-?>

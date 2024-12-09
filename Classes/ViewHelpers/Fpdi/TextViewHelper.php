@@ -1,57 +1,45 @@
 <?php
+declare(strict_types=1);
+
 namespace Famelo\PDF\ViewHelpers\Fpdi;
 
-/*                                                                        *
- * This script belongs to the TYPO3 Flow package "Famelo.Pdf".            *
- *                                                                        *
- * It is free software; you can redistribute it and/or modify it under    *
- * the terms of the GNU Lesser General Public License, either version 3   *
- * of the License, or (at your option) any later version.                 *
- *                                                                        *
- * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+/*
+ * This file is part of the Famelo.PDF package.
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
 
-/**
- * @api
- */
-class TextViewHelper extends AbstractViewHelper {
+class TextViewHelper extends AbstractViewHelper
+{
     /**
-     * NOTE: This property has been introduced via code migration to ensure backwards-compatibility.
      * @see AbstractViewHelper::isOutputEscapingEnabled()
-     * @var boolean
+     * @var bool
      */
-    protected $escapeOutput = FALSE;
+    protected $escapeOutput = false;
 
-    /**
-     * Constructor
-     *
-     * @api
-     */
-    public function __construct() {
-        $this->registerArgument('font', 'string', 'font name', FALSE);
-        $this->registerArgument('font-size', 'integer', 'font size', FALSE);
-        $this->registerArgument('font-weight', 'string', 'font weight', FALSE);
-        $this->registerArgument('color', 'string', 'font color', FALSE);
-        $this->registerArgument('x', 'string', 'x position', FALSE);
-        $this->registerArgument('y', 'string', 'y position', FALSE);
+    public function __construct()
+    {
+        $this->registerArgument('font', 'string', 'font name');
+        $this->registerArgument('font-size', 'integer', 'font size');
+        $this->registerArgument('font-weight', 'string', 'font weight');
+        $this->registerArgument('color', 'string', 'font color');
+        $this->registerArgument('x', 'string', 'x position');
+        $this->registerArgument('y', 'string', 'y position');
     }
 
-    /**
-     * This tag will not be rendered at all.
-     *
-     * @return void
-     * @api
-     */
-    public function render() {
-        $texts = array();
-        if ($this->viewHelperVariableContainer->exists('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts')) {
-            $texts = $this->viewHelperVariableContainer->get('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts');
+    public function render(): void
+    {
+        $texts = [];
+        if ($this->viewHelperVariableContainer->exists(TextViewHelper::class, 'texts')) {
+            $texts = $this->viewHelperVariableContainer->get(TextViewHelper::class, 'texts');
         }
         $text = $this->arguments;
         $text['content'] = $this->renderChildren();
         $texts[] = $text;
-        $this->viewHelperVariableContainer->addOrUpdate('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts', $texts);
+        $this->viewHelperVariableContainer->addOrUpdate(TextViewHelper::class, 'texts', $texts);
     }
 }

@@ -1,5 +1,4 @@
-Famelo.PDF
-==========
+# Famelo.PDF
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mneuhaus/Famelo.PDF/badges/quality-score.png?s=b6c22938502bc98132697e2b98b33429b3a05144)](https://scrutinizer-ci.com/g/mneuhaus/Famelo.PDF/)
 
@@ -22,12 +21,11 @@ $document->send();
 $document->save('/Some/Path/SomeDocument ' . date('d.m.Y') . '.pdf');
 ```
 
-This example will render a template located at 'resource://My.Package/Private/Documents/SomeDocument.html
+This example will render a template located at `resource://My.Package/Private/Documents/SomeDocument.html`
 and convert it to PDF.
 
 
-Page Format and orientation
----------------------------
+## Page Format and orientation
 
 By default pages will be rendered as a A4 Portrait.
 You can choose another format/orientation like this:
@@ -40,7 +38,7 @@ $document = new \Famelo\PDF\Document('My.Package:SomeDocument', 'A5');
 $document->setFormat('A4-L');
 
 // set format to 100mm x 200mm
-$document->setFormat(array(100, 200));
+$document->setFormat([100, 200]);
 ```
 
 The MPDF library supports different page sizes with these keywords or an array containing 2 values for width + height:
@@ -66,13 +64,11 @@ If format is defined as a string, the final orientation parameter will be ignore
 
 *Ledger and Tabloid are standard formats with the same page size but different orientation (Ledger is landscape, and Tabloid is portrait). mPDF treats these identically; if you wish to use Ledger, you should specify "Ledger-L" for landscape.
 
-Page numbering in Fluid
-----------------------------
+## Page numbering in Fluid
 
-If you want to use mPDFs page numbering variables like {PAGENO} or {nbpg} you have to wrap them in a CDATA section, to keep  Fluid from interpreting them as variables.
+If you want to use mPDFs page numbering variables like `{PAGENO}` or `{nbpg}` you have to wrap them in a CDATA section, to keep  Fluid from interpreting them as variables.
 
-PDF Generator Implementation
-----------------------------
+## PDF Generator Implementation
 
 By default this Library uses the MPDF library to generate the PDFs.
 But you can change the defaultGenerator through the Settings.yaml like

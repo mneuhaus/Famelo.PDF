@@ -1,43 +1,29 @@
 <?php
+declare(strict_types=1);
+
 namespace Famelo\PDF\Generator;
 
-/*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.PDF".                 *
- *                                                                        *
- * It is free software; you can redistribute it and/or modify it under    *
- * the terms of the GNU Lesser General Public License, either version 3   *
- * of the License, or (at your option) any later version.                 *
- *                                                                        *
- * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+/*
+ * This file is part of the Famelo.PDF package.
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 use Famelo\PDF\Error\UnknownGeneratorOptionException;
-use Neos\Flow\Annotations as Flow;
+use Mpdf\Mpdf;
 
-/**
- * @Flow\Scope("prototype")
- */
-class MpdfGenerator implements PdfGeneratorInterface {
+class MpdfGenerator implements PdfGeneratorInterface
+{
 
-    /**
-     * @var string
-     */
-    protected $format;
+    protected string|array $format;
 
-    /**
-     * @var string
-     */
-    protected $header;
+    protected string $header = '';
 
-    /**
-     * @var string
-     */
-    protected $footer;
+    protected string $footer = '';
 
-    /**
-     * @var string
-     */
-    protected $options = array(
+    protected array $options = [
         'encoding' => '',
         'format' => 'A4',
         'orientation' => 'P',
@@ -49,22 +35,26 @@ class MpdfGenerator implements PdfGeneratorInterface {
         'margin_bottom' => 16,
         'margin_header' => 9,
         'margin_footer' => 9,
-    );
+    ];
 
-    public function setFormat($format) {
+    public function setFormat(string|array $format): void
+    {
         $this->setOption('format', $format);
     }
 
-    public function setHeader($content) {
+    public function setHeader(string $content): void
+    {
         $this->header = $content;
     }
 
-    public function setFooter($content) {
+    public function setFooter(string $content): void
+    {
         $this->footer = $content;
     }
 
-    public function setOption($name, $value) {
-        $backwardsCompatabilityOptionNames = array(
+    public function setOption(string $name, mixed $value): void
+    {
+        $backwardsCompatabilityOptionNames = [
             'marginLeft' => 'margin_left',
             'marginRight' => 'margin_right',
             'marginTop' => 'margin_top',
@@ -80,7 +70,7 @@ class MpdfGenerator implements PdfGeneratorInterface {
             'margin-footer' => 'margin_footer',
             'font-size' => 'default_font_size',
             'font' => 'default_font'
-        );
+        ];
         if (isset($backwardsCompatabilityOptionNames[$name])) {
             $name = $backwardsCompatabilityOptionNames[$name];
         }
@@ -90,39 +80,42 @@ class MpdfGenerator implements PdfGeneratorInterface {
         $this->options[$name] = $value;
     }
 
-    public function getMpdfInstance() {
-        $mpdf = new \Mpdf\Mpdf(
-            array('encoding' => $this->options['encoding'],
-                'format' => $this->options['format'],
-                'default_font_size' => $this->options['default_font_size'],
-                'default_font' => $this->options['default_font'],
-                'margin_left' => $this->options['margin_left'],
-                'margin_right' => $this->options['margin_right'],
-                'margin_top' => $this->options['margin_top'],
-                'margin_bottom' => $this->options['margin_bottom'],
-                'margin_header' => $this->options['margin_header'],
-                'margin_footer' => $this->options['margin_footer'],
-                'orientation' => $this->options['orientation'])
-        );
+    public function getMpdfInstance(): Mpdf
+    {
+        $mpdf = new Mpdf([
+            'encoding' => $this->options['encoding'],
+            'format' => $this->options['format'],
+            'default_font_size' => $this->options['default_font_size'],
+            'default_font' => $this->options['default_font'],
+            'margin_left' => $this->options['margin_left'],
+            'margin_right' => $this->options['margin_right'],
+            'margin_top' => $this->options['margin_top'],
+            'margin_bottom' => $this->options['margin_bottom'],
+            'margin_header' => $this->options['margin_header'],
+            'margin_footer' => $this->options['margin_footer'],
+            'orientation' => $this->options['orientation']
+        ]);
 
-        if ($this->footer !== NULL) {
+        if ($this->footer !== '') {
             $mpdf->SetHTMLFooter($this->footer);
         }
-        if ($this->header !== NULL) {
+        if ($this->header !== '') {
             $mpdf->SetHTMLHeader($this->header);
         }
         return $mpdf;
     }
 
-    public function getPdfStream($content)     {
+    public function getPdfStream(string $content): string
+    {
         $previousErrorReporting = error_reporting(0);
         $pdf = $this->getMpdfInstance();
         $pdf->WriteHTML($content);
         error_reporting($previousErrorReporting);
-        return $pdf->Output('', 'S');
+        return (string)$pdf->Output('', 'S');
     }
 
-    public function sendPdf($content, $filename = NULL) {
+    public function sendPdf(string $content, string $filename = null): void
+    {
         $previousErrorReporting = error_reporting(0);
         $pdf = $this->getMpdfInstance();
         $pdf->WriteHTML($content);
@@ -130,7 +123,8 @@ class MpdfGenerator implements PdfGeneratorInterface {
         error_reporting($previousErrorReporting);
     }
 
-    public function downloadPdf($content, $filename = NULL) {
+    public function downloadPdf(string $content, string $filename = null): void
+    {
         $previousErrorReporting = error_reporting(0);
         $pdf = $this->getMpdfInstance();
         $pdf->WriteHTML($content);
@@ -138,7 +132,8 @@ class MpdfGenerator implements PdfGeneratorInterface {
         error_reporting($previousErrorReporting);
     }
 
-    public function savePdf($content, $filename) {
+    public function savePdf(string $content, string $filename): void
+    {
         $previousErrorReporting = error_reporting(0);
         $pdf = $this->getMpdfInstance();
         $pdf->WriteHTML($content);

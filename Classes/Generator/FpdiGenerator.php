@@ -1,98 +1,111 @@
 <?php
+declare(strict_types=1);
+
 namespace Famelo\PDF\Generator;
 
-/*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.PDF".                 *
- *                                                                        *
- * It is free software; you can redistribute it and/or modify it under    *
- * the terms of the GNU Lesser General Public License, either version 3   *
- * of the License, or (at your option) any later version.                 *
- *                                                                        *
- * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+/*
+ * This file is part of the Famelo.PDF package.
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 use Famelo\PDF\View\StandaloneView;
-use Neos\Flow\Annotations as Flow;
+use fpdi\FPDI;
+use Neos\Flow\Exception;
 
-/**
- * @Flow\Scope("prototype")
- */
-class FpdiGenerator implements PdfGeneratorInterface {
+class FpdiGenerator implements PdfGeneratorInterface
+{
 
-    /**
-     * @var string
-     */
-    protected $format;
+    protected string $format;
 
-    /**
-     * @var StandaloneView
-     */
-    protected $view;
+    protected StandaloneView $view;
 
-    public function __construct($options, $view) {
+    public function __construct(array $options, StandaloneView $view)
+    {
+        if (!class_exists(FPDI::class)) {
+            throw new Exception('You need to install "itbz/fpdi" to use the FpdiGenerator!');
+        }
+
         $this->view = $view;
     }
 
-    public function setFormat($format) {
+    public function setFormat(string|array $format): void
+    {
         $this->format = $format;
     }
 
-    public function setHeader($content) {
-
+    public function setHeader(string $content): void
+    {
     }
 
-    public function setFooter($content) {
-
+    public function setFooter(string $content): void
+    {
     }
 
-    public function setOption($name, $value) {
-
+    public function setOption(string $name, mixed $value): void
+    {
     }
 
-    public function sendPdf($content, $filename = NULL) {
+    public function sendPdf(string $content, string $filename = null): void
+    {
         $fpdi = $this->generate();
         $fpdi->Output();
     }
 
-    public function downloadPdf($content, $filename = NULL) {
+    public function downloadPdf(string $content, string $filename = NULL): void
+    {
         $fpdi = $this->generate();
         $fpdi->Output($filename, 'D');
     }
 
-    public function savePdf($content, $filename) {
+    public function savePdf(string $content, string $filename): void
+    {
         $fpdi = $this->generate();
         $fpdi->Output($filename, 'F');
     }
 
-    public function generate() {
+    public function getPdfStream(string $content): string
+    {
+        throw new \RuntimeException('Not implemented');
+    }
+
+    public function generate(): FPDI
+    {
         $container = $this->view->getViewHelperVariableContainer();
         if ($container->exists('Famelo\Pdf\ViewHelpers\Fpdi\DefaultsViewHelper', 'defaults')) {
             $defaults = $container->get('Famelo\Pdf\ViewHelpers\Fpdi\DefaultsViewHelper', 'defaults');
+        } else {
+            $defaults = [];
         }
         if ($container->exists('Famelo\Pdf\ViewHelpers\Fpdi\TemplateViewHelper', 'template')) {
             $template = $container->get('Famelo\Pdf\ViewHelpers\Fpdi\TemplateViewHelper', 'template');
+        } else {
+            $template = '';
         }
         if ($container->exists('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts')) {
             $texts = $container->get('Famelo\Pdf\ViewHelpers\Fpdi\TextViewHelper', 'texts');
+        } else {
+            $texts = [];
         }
 
-        $fpdi = new \fpdi\FPDI();
+        $fpdi = new FPDI();
         $fpdi->AddPage();
         $fpdi->setSourceFile($template);
         $fpdi->useTemplate($fpdi->importPage(1), 0, 0, 0);
 
         foreach ($texts as $text) {
             foreach ($defaults as $key => $value) {
-                if (isset($text[$key]) && !empty($text[$key])) {
+                if (!empty($text[$key])) {
                     continue;
                 }
                 $text[$key] = $value;
             }
 
-            $text['font-weight'] = $text['font-weight'] == 'bold' ? 'B' : '';
+            $text['font-weight'] = $text['font-weight'] === 'bold' ? 'B' : '';
 
             $fpdi->SetFont($text['font'], $text['font-weight'], $text['font-size']);
-            #$fpdi->SetTextColor($page[$i][$x]['color_r'], $page[$i][$x]['color_b'], $page[$i][$x]['color_g']);
             $fpdi->SetXY($text['x'], $text['y']);
             $fpdi->Write(0, $text['content']);
         }

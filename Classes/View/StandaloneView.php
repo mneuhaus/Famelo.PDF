@@ -1,40 +1,32 @@
 <?php
+declare(strict_types=1);
+
 namespace Famelo\PDF\View;
 
-/*                                                                        *
- * This script belongs to the FLOW package "Famelo.PDF".                  *
- *                                                                        *
- * It is free software; you can redistribute it and/or modify it under    *
- * the terms of the GNU Lesser General Public License, either version 3   *
- * of the License, or (at your option) any later version.                 *
- *                                                                        *
- * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+/*
+ * This file is part of the Famelo.PDF package.
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
-use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Mvc\View\ViewInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer;
 
 /**
  * A standalone template view.
- * Helpful if you want to use Fluid separately from MVC
- * E.g. to generate template based emails.
- *
- * @api
  */
-class StandaloneView extends \Neos\FluidAdaptor\View\StandaloneView {
-    /**
-    * Initialize Object
-    */
-    public function initializeObject() {
+class StandaloneView extends \Neos\FluidAdaptor\View\StandaloneView
+{
+    public function initializeObject(): void
+    {
         parent::initializeObject();
 
         $this->request->setFormat('html');
     }
 
-    /**
-     * Get ViewHelper Variable Container
-     */
-    public function getViewHelperVariableContainer() {
+    public function getViewHelperVariableContainer(): ViewHelperVariableContainer
+    {
         return $this->baseRenderingContext->getViewHelperVariableContainer();
     }
 }

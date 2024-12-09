@@ -1,63 +1,46 @@
 <?php
+declare(strict_types=1);
+
 namespace Famelo\PDF;
 
-/*                                                                        *
- * This script belongs to the FLOW3 package "Famelo.PDF".                 *
- *                                                                        *
- * It is free software; you can redistribute it and/or modify it under    *
- * the terms of the GNU Lesser General Public License, either version 3   *
- * of the License, or (at your option) any later version.                 *
- *                                                                        *
- * The TYPO3 project - inspiring people to share!                         *
- *                                                                        */
+/*
+ * This file is part of the Famelo.PDF package.
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
 
 use Famelo\PDF\Generator\PdfGeneratorInterface;
+use Famelo\PDF\View\StandaloneView;
+use Famelo\PDF\ViewHelpers\FooterViewHelper;
+use Famelo\PDF\ViewHelpers\HeaderViewHelper;
 use Neos\Flow\Annotations as Flow;
 
 /**
  * @Flow\Scope("prototype")
  */
-class Document {
-    /**
-     * @var string
-     */
-    protected $templatePath = 'resource://@package/Private/Documents/@document.html';
+class Document
+{
+    protected string $templatePath = 'resource://@package/Private/Documents/@document.html';
 
-    /**
-     * @var string
-     */
-    protected $layoutRootPath = 'resource://@package/Private/Layouts/';
+    protected string $layoutRootPath = 'resource://@package/Private/Layouts/';
 
-    /**
-     * @var string
-     */
-    protected $partialRootPath = 'resource://@package/Private/Partials/';
+    protected string $partialRootPath = 'resource://@package/Private/Partials/';
 
-    /**
-     * @var string
-     */
-    protected $document = 'Standard';
+    protected string $document = 'Standard';
 
-    /**
-     * @var string
-     */
-    protected $package = NULL;
+    protected ?string $package = null;
 
     /**
      * @Flow\Inject
-     * @var \Famelo\PDF\View\StandaloneView
+     * @var StandaloneView
      */
     protected $view;
 
-    /**
-     * @var string
-     */
-    protected $format;
+    protected string|array $format;
 
-    /**
-     * @var array
-     */
-    protected $options = array();
+    protected array $options = [];
 
     /**
      * @Flow\InjectConfiguration(path="DefaultGenerator", package="Famelo.PDF")
@@ -71,30 +54,18 @@ class Document {
      */
     protected $defaultGeneratorOptions;
 
-    /**
-     * @var PdfGeneratorInterface
-     */
-    protected $generator;
+    protected ?PdfGeneratorInterface $generator = null;
 
-    /**
-     * @var string
-     */
-    protected $templateSource;
+    protected string $templateSource = '';
 
-    /**
-     * @param string $document
-     * @param string $format
-     */
-    public function __construct($document, $format = 'A4') {
+    public function __construct(string $document, string|array $format = 'A4')
+    {
         $this->setDocument($document);
         $this->format = $format;
     }
 
-    /**
-     * @param string $document
-     * @return Document
-     */
-    public function setDocument($document) {
+    public function setDocument(string $document): Document
+    {
         $parts = explode(':', $document);
         if (count($parts) > 1) {
             $this->package = $parts[0];
@@ -105,24 +76,21 @@ class Document {
         return $this;
     }
 
-    /**
-     * @param string $templateSource
-     */
-    public function setTemplateSource($templateSource) {
+    public function setTemplateSource(string $templateSource): void
+    {
         $this->templateSource = $templateSource;
     }
 
-    /**
-     * @param string $format
-     */
-    public function setFormat($format) {
+    public function setFormat(string|array $format): void
+    {
         $this->format = $format;
     }
 
     /**
      * @return PdfGeneratorInterface
      */
-    public function getGenerator() {
+    public function getGenerator(): PdfGeneratorInterface
+    {
         if (!$this->generator instanceof PdfGeneratorInterface) {
             $this->generator = new $this->defaultGenerator($this->defaultGeneratorOptions, $this->view);
         }
@@ -132,22 +100,20 @@ class Document {
         return $this->generator;
     }
 
-    /**
-     * Render
-     */
-    public function render() {
-        if ($this->package === NULL) {
+    public function render(): string
+    {
+        if ($this->package === null) {
             $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             $class = $trace[0]['class'];
             preg_match('/([A-Za-z]*)\\\\([A-Za-z]*)/', $class, $match);
             $this->package = $match[1] . '.' . $match[2];
         }
 
-        $replacements = array(
+        $replacements = [
             '@package' => $this->package,
             '@document' => $this->document
-        );
-        if ($this->templateSource === NULL) {
+        ];
+        if ($this->templateSource === '') {
             $template = str_replace(array_keys($replacements), array_values($replacements), $this->templatePath);
             $this->view->setTemplatePathAndFilename($template);
 
@@ -162,40 +128,32 @@ class Document {
 
         $this->view->setFormat('html');
 
-        $this->view->getRequest()->setControllerPackageKey($this->package);
+        $this->view->getRequest()?->setControllerPackageKey($this->package);
 
-        $content = $this->view->render();
-        return $content;
+        return $this->view->render();
     }
 
-    /**
-     * @param $generator
-     */
-    public function setOptionsByViewHelper($generator) {
+    public function setOptionsByViewHelper(PdfGeneratorInterface $generator): void
+    {
         $viewHelperVariableContainer = $this->view->getViewHelperVariableContainer();
-        if ($viewHelperVariableContainer->exists('Famelo\Pdf\ViewHelpers\HeaderViewHelper', 'header')) {
-            $header = $viewHelperVariableContainer->get('Famelo\Pdf\ViewHelpers\HeaderViewHelper', 'header');
+        if ($viewHelperVariableContainer->exists(HeaderViewHelper::class, 'header')) {
+            $header = $viewHelperVariableContainer->get(HeaderViewHelper::class, 'header');
             $generator->setHeader($header);
         }
         $viewHelperVariableContainer = $this->view->getViewHelperVariableContainer();
-        if ($viewHelperVariableContainer->exists('Famelo\Pdf\ViewHelpers\FooterViewHelper', 'footer')) {
-            $footer = $viewHelperVariableContainer->get('Famelo\Pdf\ViewHelpers\FooterViewHelper', 'footer');
+        if ($viewHelperVariableContainer->exists(FooterViewHelper::class, 'footer')) {
+            $footer = $viewHelperVariableContainer->get(FooterViewHelper::class, 'footer');
             $generator->setFooter($footer);
         }
     }
 
-    /**
-     * @param string $name
-     * @param $value
-     */
-    public function setOption($name, $value) {
+    public function setOption(string $name, mixed $value): void
+    {
         $this->options[$name] = $value;
     }
 
-    /**
-     * @return string
-     */
-    public function getStream() {
+    public function getStream(): string
+    {
         $content = $this->render();
         $generator = $this->getGenerator();
         $this->setOptionsByViewHelper($generator);
@@ -203,10 +161,8 @@ class Document {
         return $generator->getPdfStream($content);
     }
 
-    /**
-     * @param string $filename
-     */
-    public function send($filename = NULL) {
+    public function send(string $filename = null): void
+    {
         $content = $this->render();
         $generator = $this->getGenerator();
         $this->setOptionsByViewHelper($generator);
@@ -215,10 +171,8 @@ class Document {
         exit();
     }
 
-    /**
-     * @param string $filename
-     */
-    public function download($filename = NULL) {
+    public function download(string $filename = NULL): void
+    {
         $content = $this->render();
         $generator = $this->getGenerator();
 
@@ -228,10 +182,8 @@ class Document {
         exit();
     }
 
-    /**
-     * @param string $filename
-     */
-    public function save($filename) {
+    public function save(string $filename): void
+    {
         $content = $this->render();
         $generator = $this->getGenerator();
         $this->setOptionsByViewHelper($generator);
@@ -239,21 +191,14 @@ class Document {
         $generator->savePdf($content, $filename);
     }
 
-    /**
-     * @param string $key
-     * @param $value
-     * @return Document
-     */
-    public function assign($key, $value) {
+    public function assign(string $key, mixed $value): Document
+    {
         $this->view->assign($key, $value);
         return $this;
     }
 
-    /**
-     * @param array $values
-     * @return Document
-     */
-    public function assignMultiple(array $values) {
+    public function assignMultiple(array $values): Document
+    {
         foreach ($values as $key => $value) {
             $this->assign($key, $value);
         }
